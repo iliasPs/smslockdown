@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+
+    <group
+        android:id="@+id/group"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/greek_option"
+            android:icon="@drawable/greek_flag"
+            android:title="Greek"
+            app:showAsAction="always|withText"/>
+
+        <item
+            android:id="@+id/english_option"
+            android:icon="@drawable/uk_flag"
+            android:title="English"
+            app:showAsAction="ifRoom|withText" />
+
+    </group>
+
+    <item
+        android:id="@+id/new_user"
+        android:icon="@drawable/dark_mode"
+        android:title="@string/new_user" />
+
+</menu>

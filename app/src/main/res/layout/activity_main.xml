@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/primary"
+    tools:context=".MainActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".MainActivity">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/primary_dark"
+            app:layout_constraintBottom_toTopOf="@id/userCard"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/comfortaa_bold"
+                android:text="@string/app_name"
+                android:textAllCaps="false"
+                android:textSize="22sp" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/userCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/rounded_card_view"
+            app:cardCornerRadius="10dp"
+            app:layout_constraintBottom_toTopOf="@id/buttonsCard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolBar">
+
+            <LinearLayout
+                android:id="@+id/editTextLinear"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/rounded_card_view"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/comfortaa_medium"
+                    android:hint="@string/userName"
+                    android:textAlignment="center"
+                    android:textColor="@color/primary_text"
+                    android:textColorHint="@color/primary_text" />
+
+                <View
+                    android:id="@+id/separator"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@color/primary_dark" />
+
+                <TextView
+                    android:id="@+id/userAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_medium"
+                    android:hint="@string/userAddress"
+                    android:textAlignment="center"
+                    android:textColor="@color/primary_text"
+                    android:textColorHint="@color/primary_text" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/buttonsCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.85"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/userCard">
+
+            <RadioGroup
+                android:id="@+id/smsRadioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/icons"
+                android:orientation="vertical"
+                android:padding="10dp"
+                tools:layout_editor_absoluteX="164dp"
+                tools:layout_editor_absoluteY="251dp">
+
+                <RadioButton
+                    android:id="@+id/sms1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/primary_text"
+                    android:fontFamily="@font/comfortaa_medium"
+                    android:text="@string/sms1"
+                    android:textColor="@color/primary_text"
+                    android:textSize="@dimen/radioButtonTextSize" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/primary_dark" />
+
+                <RadioButton
+                    android:id="@+id/sms2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/primary_text"
+                    android:fontFamily="@font/comfortaa_medium"
+                    android:text="@string/sms2"
+                    android:textColor="@color/primary_text"
+                    android:textSize="@dimen/radioButtonTextSize" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/primary_dark" />
+
+                <RadioButton
+                    android:id="@+id/sms3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/primary_text"
+                    android:fontFamily="@font/comfortaa_medium"
+                    android:text="@string/sms3"
+                    android:textColor="@color/primary_text"
+                    android:textSize="@dimen/radioButtonTextSize" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/primary_dark" />
+
+                <RadioButton
+                    android:id="@+id/sms4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/primary_text"
+                    android:fontFamily="@font/comfortaa_medium"
+                    android:text="@string/sms4"
+                    android:textColor="@color/primary_text"
+                    android:textSize="@dimen/radioButtonTextSize" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/primary_dark" />
+
+
+                <RadioButton
+                    android:id="@+id/sms5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/primary_text"
+                    android:fontFamily="@font/comfortaa_medium"
+                    android:text="@string/sms5"
+                    android:textColor="@color/primary_text"
+                    android:textSize="@dimen/radioButtonTextSize" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/primary_dark" />
+
+                <RadioButton
+                    android:id="@+id/sms6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/primary_text"
+                    android:fontFamily="@font/comfortaa_medium"
+                    android:text="@string/sms6"
+                    android:textColor="@color/primary_text"
+                    android:textSize="@dimen/radioButtonTextSize" />
+
+            </RadioGroup>
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:id="@+id/desc_linear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/desc_tv_bck"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonsCard">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/comfortaa_light"
+                android:padding="5dp"
+                android:text="@string/description"
+                android:textColor="@color/primary_text" />
+
+            <TextView
+                android:id="@+id/description_text"
+                android:layout_width="match_parent"
+                android:layout_height="110dp"
+                android:elevation="10dp"
+                android:fontFamily="@font/comfortaa_light"
+                android:padding="10dp"
+                android:scrollbars="vertical"
+                android:textColor="@color/primary_text" />
+
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/sms_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/rounded_buttons_bck"
+            android:fontFamily="@font/comfortaa_medium"
+            android:text="@string/send"
+            android:textAllCaps="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/desc_linear" />
+
+
+        <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:foregroundGravity="center"
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-5047897677984062/3872488133"
+            ads:layout_constraintBottom_toBottomOf="parent"
+            ads:layout_constraintLeft_toLeftOf="parent"
+            ads:layout_constraintRight_toRightOf="parent"
+            ads:layout_constraintTop_toBottomOf="@id/sms_button"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

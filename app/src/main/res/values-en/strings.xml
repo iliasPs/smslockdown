@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    //sms cases
+    <string name="sms1">Pharmacy, doctor or hospital</string>
+    <string name="sms2">Supermarket</string>
+    <string name="sms3">Bank, public service</string>
+    <string name="sms4">Assist a person in need</string>
+    <string name="sms5">Funeral, Marriage, Baptism</string>
+    <string name="sms6">Physical exercise, Pet\'s needs</string>
+
+    //sms descriptions
+    <string name="sms1_desc">Movement to the pharmacy or visiting a doctor or to donate blood, in the case that this is recommended after a previous communication. </string>
+    <string name="sms2_desc">Movement to an in-service supply store of basic goods (supermarket, mini-market), where they cannot be sent out. </string>
+    <string name="sms3_desc">Movement to a public service or bank, insofar as electronic transaction is not possible.</string>
+    <string name="sms4_desc">Movement to help people in need or escort minors to/from school.</string>
+    <string name="sms5_desc">Movement to a funeral ceremony under the conditions laid down by law or movement of divorced or separated parents necessary to ensure communication between parents and children, in accordance with the provisions in force.</string>
+    <string name="sms6_desc">Physical exercise outdoors or movement with a pet, individually or per three persons, in the latter case having regard to the necessary distance of 1.5 m.</string>
+
+    // editext hints
+    <string name="userName">Full name</string>
+    <string name="userAddress">Street Address</string>
+
+    // Description TV
+    <string name="description">Description: </string>
+    <string name="send">Send SMS</string>
+    <string name="new_user">New User</string>
+</resources>
