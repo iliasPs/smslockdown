@@ -23,7 +23,6 @@
 
     <item
         android:id="@+id/new_user"
-        android:icon="@drawable/dark_mode"
         android:title="@string/new_user" />
 
 </menu>

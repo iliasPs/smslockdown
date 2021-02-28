@@ -1,11 +1,8 @@
 package com.ip.smslockdown;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
+import android.net.Uri;
 import android.os.Bundle;
-import android.telephony.SmsManager;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Menu;
@@ -16,11 +13,9 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.google.android.gms.ads.AdRequest;
@@ -53,7 +48,6 @@ public class MainActivity extends LocalizationActivity {
     private Toolbar toolbar;
     private User user;
     private String smsToSend;
-    private String language;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,10 +118,8 @@ public class MainActivity extends LocalizationActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isSMSPermissionGranted()) {
-                    sendSms(smsToSend);
+                    sendSms(PHONE_NUMBER, smsToSend);
                     Log.d(TAG, "sms to send " + smsToSend);
-                }
             }
         });
     }
@@ -161,32 +153,10 @@ public class MainActivity extends LocalizationActivity {
         PreferencesManager.putObject("user", user);
     }
 
-    private boolean isSMSPermissionGranted() {
-        if (Build.VERSION.SDK_INT >= 23) {
-            if (checkSelfPermission(android.Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
-                Log.v(TAG, "Permission is granted");
-                return true;
-            } else {
-                Log.v(TAG, "Permission is revoked");
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, 0);
-                return false;
-            }
-        } else { //permission is automatically granted on sdk<23 upon installation
-            Log.v(TAG, "Permission is granted");
-            return true;
-        }
-    }
-
-
-    private void sendSms(String msg) {
-        try {
-            SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage(MainActivity.PHONE_NUMBER, null, msg, null, null);
-            Toast.makeText(getApplicationContext(), "Message Sent", Toast.LENGTH_LONG).show();
-        } catch (Exception ex) {
-            Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_LONG).show();
-            ex.printStackTrace();
-        }
+    private void sendSms(String phoneNumber, String message) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + phoneNumber));
+        intent.putExtra("sms_body", message);
+        startActivity(intent);
     }
 
     private void initViews(ActivityMainBinding binding) {
