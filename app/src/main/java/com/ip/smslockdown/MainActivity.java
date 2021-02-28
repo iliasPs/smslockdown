@@ -28,11 +28,15 @@ import com.ip.smslockdown.databinding.ActivityMainBinding;
 import com.ip.smslockdown.models.User;
 import com.shawnlin.preferencesmanager.PreferencesManager;
 
+import lombok.Getter;
+
 public class MainActivity extends LocalizationActivity {
 
     private final static String TAG = MainActivity.class.getSimpleName();
     private final static String PHONE_NUMBER = "13033";
     private final Gson gson = new Gson();
+    @Getter
+    public User user;
     private AdView adView;
     private ActivityMainBinding binding;
     private TextView descriptionTv;
@@ -46,7 +50,6 @@ public class MainActivity extends LocalizationActivity {
     private RadioButton radioButton6;
     private Button sendButton;
     private Toolbar toolbar;
-    private User user;
     private String smsToSend;
 
     @Override
@@ -118,8 +121,8 @@ public class MainActivity extends LocalizationActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    sendSms(PHONE_NUMBER, smsToSend);
-                    Log.d(TAG, "sms to send " + smsToSend);
+                sendSms(PHONE_NUMBER, smsToSend);
+                Log.d(TAG, "sms to send " + smsToSend);
             }
         });
     }
@@ -153,11 +156,6 @@ public class MainActivity extends LocalizationActivity {
         PreferencesManager.putObject("user", user);
     }
 
-    private void sendSms(String phoneNumber, String message) {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + phoneNumber));
-        intent.putExtra("sms_body", message);
-        startActivity(intent);
-    }
 
     private void initViews(ActivityMainBinding binding) {
 
@@ -176,4 +174,12 @@ public class MainActivity extends LocalizationActivity {
 
         descriptionTv.setMovementMethod(new ScrollingMovementMethod());
     }
+
+
+    public void sendSms(String phoneNumber, String message) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + phoneNumber));
+        intent.putExtra("sms_body", message);
+        startActivity(intent);
+    }
+
 }

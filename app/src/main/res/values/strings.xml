@@ -28,5 +28,7 @@
     <string name="button_text" translatable="false">OK </string>
     <string name="send">Αποστολή SMS</string>
     <string name="new_user">Νέος Χρήστης</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 
 </resources>
