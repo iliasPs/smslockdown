@@ -85,4 +85,14 @@
         android:background="@drawable/rounded_buttons_bck"
         android:text="@string/button_text"
         app:layout_constraintTop_toBottomOf="@id/userCard" />
+
+    <Button
+        android:id="@+id/delete_user_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@drawable/rounded_buttons_bck"
+        android:text="@string/delete_button_text"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@id/enter_user_button" />
 </androidx.constraintlayout.widget.ConstraintLayout>
