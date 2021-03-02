@@ -17,6 +17,8 @@ import com.google.gson.Gson;
 import com.ip.smslockdown.databinding.UserInputBinding;
 import com.ip.smslockdown.models.User;
 
+import java.util.Objects;
+
 public class UserInputActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
@@ -36,7 +38,7 @@ public class UserInputActivity extends AppCompatActivity {
         setContentView(view);
         initViews(binding);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         userNameEditText.addTextChangedListener(new TextWatcher() {
@@ -81,10 +83,13 @@ public class UserInputActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                user.saveObject(getApplicationContext());
                 intent.putExtra("user", gson.toJson(user));
                 startActivity(intent);
             }
         });
+//TODO i need to save the user internally
+
 
         super.onCreate(savedInstanceState);
     }
