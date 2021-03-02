@@ -7,9 +7,9 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 
 import com.ip.smslockdown.models.User;
-import com.shawnlin.preferencesmanager.PreferencesManager;
 
 /**
  * Implementation of App Widget functionality.
@@ -25,21 +25,9 @@ public class smsWidget extends AppWidgetProvider {
     private final static String PHONE_NUMBER = "13033";
     User user;
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId) {
-        // Construct the RemoteViews object
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.sms_widget);
-
-
-        // Instruct the widget manager to update the widget
-        appWidgetManager.updateAppWidget(appWidgetId, views);
-
-    }
-
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them
-        user = PreferencesManager.getObject("user", User.class);
         for (int appWidgetId : appWidgetIds) {
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.sms_widget);
             views.setOnClickPendingIntent(R.id.docButton, getPendingSelfIntent(context, SMS1));
@@ -68,42 +56,65 @@ public class smsWidget extends AppWidgetProvider {
         super.onReceive(context, intent);
         SmsHelper smsHelper = SmsHelper.getInstance();
 
-
-        User user = User.builder().build().getObject(context);
-
-            if (SMS1.equals(intent.getAction())) {
-                updateWidget(context);
+        if (SMS1.equals(intent.getAction())) {
+            updateWidget(context);
+            if (doesUserExist(context)) {
+                user = User.builder().build().getUserFromCache(context);
                 smsHelper.sendSms(PHONE_NUMBER, "1 " + user.getFullName() + " " + user.getAddress(), context);
             }
-            if (SMS2.equals(intent.getAction())) {
-                updateWidget(context);
+        }
+        if (SMS2.equals(intent.getAction())) {
+            updateWidget(context);
+            if (doesUserExist(context)) {
+                user = User.builder().build().getUserFromCache(context);
                 smsHelper.sendSms(PHONE_NUMBER, "2 " + user.getFullName() + " " + user.getAddress(), context);
             }
-            if (SMS3.equals(intent.getAction())) {
-                updateWidget(context);
+        }
+        if (SMS3.equals(intent.getAction())) {
+            updateWidget(context);
+            if (doesUserExist(context)) {
+                user = User.builder().build().getUserFromCache(context);
                 smsHelper.sendSms(PHONE_NUMBER, "3 " + user.getFullName() + " " + user.getAddress(), context);
             }
-            if (SMS4.equals(intent.getAction())) {
-                updateWidget(context);
+        }
+        if (SMS4.equals(intent.getAction())) {
+            updateWidget(context);
+            if (doesUserExist(context)) {
+                user = User.builder().build().getUserFromCache(context);
                 smsHelper.sendSms(PHONE_NUMBER, "4 " + user.getFullName() + " " + user.getAddress(), context);
             }
-            if (SMS5.equals(intent.getAction())) {
-                updateWidget(context);
+        }
+        if (SMS5.equals(intent.getAction())) {
+            updateWidget(context);
+            if (doesUserExist(context)) {
+                user = User.builder().build().getUserFromCache(context);
                 smsHelper.sendSms(PHONE_NUMBER, "5 " + user.getFullName() + " " + user.getAddress(), context);
             }
-            if (SMS6.equals(intent.getAction())) {
-                updateWidget(context);
+        }
+        if (SMS6.equals(intent.getAction())) {
+            updateWidget(context);
+            if (doesUserExist(context)) {
+                user = User.builder().build().getUserFromCache(context);
                 smsHelper.sendSms(PHONE_NUMBER, "6 " + user.getFullName() + " " + user.getAddress(), context);
             }
         }
+    }
+
 
     private void updateWidget(Context context) {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.sms_widget);
-        ComponentName watchWidget= new ComponentName(context, smsWidget.class);
+        ComponentName watchWidget = new ComponentName(context, smsWidget.class);
         appWidgetManager.updateAppWidget(watchWidget, remoteViews);
     }
 
+    private boolean doesUserExist(Context c) {
+        if (User.builder().build().getUserFromCache(c) != null) {
+            return true;
+        }
+        Toast.makeText(c, R.string.no_user_available, Toast.LENGTH_LONG).show();
+        return false;
+    }
 
     protected PendingIntent getPendingSelfIntent(Context context, String action) {
         Intent intent = new Intent(context, getClass());

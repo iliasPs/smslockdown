@@ -26,7 +26,6 @@ import com.google.android.gms.ads.initialization.OnInitializationCompleteListene
 import com.google.gson.Gson;
 import com.ip.smslockdown.databinding.ActivityMainBinding;
 import com.ip.smslockdown.models.User;
-import com.shawnlin.preferencesmanager.PreferencesManager;
 
 import lombok.Getter;
 
@@ -70,12 +69,9 @@ public class MainActivity extends LocalizationActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
 
-        new PreferencesManager(this).setName("manager").init();
-
-        if (PreferencesManager.getObject("user", User.class) != null) {
-            user = PreferencesManager.getObject("user", User.class);
-            userName.setText(user.getFullName());
-            userAddress.setText(user.getAddress());
+        if (User.builder().build().getUserFromCache(getApplicationContext()) != null) {
+            userName.setText(User.builder().build().getUserFromCache(getApplicationContext()).getFullName());
+            userAddress.setText(User.builder().build().getUserFromCache(getApplicationContext()).getAddress());
         }
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -150,13 +146,6 @@ public class MainActivity extends LocalizationActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        PreferencesManager.putObject("user", user);
-    }
-
-
     private void initViews(ActivityMainBinding binding) {
 
         toolbar = binding.toolBar;
@@ -174,7 +163,6 @@ public class MainActivity extends LocalizationActivity {
 
         descriptionTv.setMovementMethod(new ScrollingMovementMethod());
     }
-
 
     public void sendSms(String phoneNumber, String message) {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + phoneNumber));

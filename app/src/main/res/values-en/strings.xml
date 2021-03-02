@@ -25,4 +25,10 @@
     <string name="description">Description: </string>
     <string name="send">Send SMS</string>
     <string name="new_user">New User</string>
+
+    <string name="delete_button_text">Delete User</string>
+
+    //toasts
+    <string name="toast_user_delete_success" translatable="true">User deleted successfully</string>
+    <string name="error_saving_user">Please complete all the fields</string>
 </resources>

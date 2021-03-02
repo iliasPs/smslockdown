@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">smsLockDown</string>
+    <string name="app_name" translatable="false">sms LockDown</string>
 
     //sms cases
     <string name="sms1" translatable="true">Φαρμακείο, Γιατρός, Νοσοκομείο, Κέντρο Υγείας</string>
@@ -26,9 +26,14 @@
 
     // edittext activity
     <string name="button_text" translatable="false">OK </string>
+    <string name="delete_button_text" translatable="true">Διαγραφή Χρήστη</string>
     <string name="send">Αποστολή SMS</string>
     <string name="new_user">Νέος Χρήστης</string>
-    <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
+
+    //toasts
+    <string name="toast_user_delete_success" translatable="true">Επιτυχής Διαγραφή Χρήστη</string>
+    <string name="toast_user_delete_error" translatable="false">Error...</string>
+    <string name="error_saving_user">Παρακαλώ συμπληρώστε όλα τα πεδία</string>
+    <string name="no_user_available" translatable="false">Please open the App and enter a User</string>
 
 </resources>

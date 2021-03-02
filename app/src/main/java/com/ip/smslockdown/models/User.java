@@ -2,6 +2,9 @@ package com.ip.smslockdown.models;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
+
+import com.ip.smslockdown.R;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,7 +23,7 @@ public class User implements Serializable {
     private String fullName;
     private String address;
 
-    public boolean saveObject(Context context) {
+    public boolean saveUserToCache(Context context) {
         final File suspend_f = new File(context.getCacheDir(), "user");
 
         FileOutputStream fos = null;
@@ -46,7 +49,7 @@ public class User implements Serializable {
         return keep;
     }
 
-    public User getObject(Context c) {
+    public User getUserFromCache(Context c) {
         final File suspend_f = new File(c.getCacheDir(), "user");
 
         User simpleClass = null;
@@ -60,4 +63,17 @@ public class User implements Serializable {
 
         return simpleClass;
     }
+
+    public boolean deleteUserFromCache(Context c) {
+        String path = c.getCacheDir().getAbsolutePath() + "/" + "user";
+        if (new File(path).exists()) {
+            Toast.makeText(c, R.string.toast_user_delete_success, Toast.LENGTH_LONG).show();
+            return new File(path).delete();
+        } else {
+            Toast.makeText(c, R.string.toast_user_delete_error, Toast.LENGTH_LONG).show();
+            Log.d("Delete operation ", " Failed to delete user");
+            return false;
+        }
+    }
+
 }

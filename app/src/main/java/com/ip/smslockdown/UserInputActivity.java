@@ -8,31 +8,34 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.google.gson.Gson;
 import com.ip.smslockdown.databinding.UserInputBinding;
 import com.ip.smslockdown.models.User;
 
 import java.util.Objects;
 
-public class UserInputActivity extends AppCompatActivity {
+public class UserInputActivity extends LocalizationActivity {
 
+    private final Gson gson = new Gson();
     private Toolbar toolbar;
     private UserInputBinding binding;
     private EditText userNameEditText;
     private EditText userAddressEditText;
     private Button enterUser;
+    private Button deleteUser;
     private String name;
     private String address;
     private User user;
-    private final Gson gson = new Gson();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         binding = UserInputBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
@@ -40,6 +43,13 @@ public class UserInputActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setLanguage(getCurrentLanguage());
+
+        // checking if user exists in cache
+        if (User.builder().build().getUserFromCache(getApplicationContext()) != null) {
+            userAddressEditText.setText(User.builder().build().getUserFromCache(getApplicationContext()).getAddress());
+            userNameEditText.setText(User.builder().build().getUserFromCache(getApplicationContext()).getFullName());
+        }
 
         userNameEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -73,7 +83,9 @@ public class UserInputActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 address = userAddressEditText.getText().toString();
-                user.setAddress(address);
+                if (user != null) {
+                    user.setAddress(address);
+                }
             }
         });
 
@@ -83,21 +95,32 @@ public class UserInputActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                user.saveObject(getApplicationContext());
-                intent.putExtra("user", gson.toJson(user));
-                startActivity(intent);
+                if (user == null || user.getFullName().isEmpty() || user.getAddress().isEmpty()) {
+                    Toast.makeText(getApplicationContext(), R.string.error_saving_user, Toast.LENGTH_LONG).show();
+                } else {
+                    user.saveUserToCache(getApplicationContext());
+                    intent.putExtra("user", gson.toJson(user));
+                    startActivity(intent);
+                }
             }
         });
-//TODO i need to save the user internally
 
+        deleteUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                userAddressEditText.getText().clear();
+                userNameEditText.getText().clear();
+                user.deleteUserFromCache(getApplicationContext());
+            }
+        });
 
-        super.onCreate(savedInstanceState);
     }
 
     private void initViews(UserInputBinding binding) {
         userNameEditText = binding.userNameEdit;
         userAddressEditText = binding.userAddress;
         enterUser = binding.enterUserButton;
+        deleteUser = binding.deleteUserButton;
         toolbar = binding.toolBar;
     }
 }
