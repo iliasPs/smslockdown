@@ -35,5 +35,6 @@
     <string name="toast_user_delete_error" translatable="false">Error...</string>
     <string name="error_saving_user">Παρακαλώ συμπληρώστε όλα τα πεδία</string>
     <string name="no_user_available" translatable="false">Please open the App and enter a User</string>
+    <string name="title_activity_maps">Map</string>
 
 </resources>
