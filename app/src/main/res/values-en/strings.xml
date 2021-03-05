@@ -27,8 +27,16 @@
     <string name="new_user">New User</string>
 
     <string name="delete_button_text">Delete User</string>
+    <string name="button_text" translatable="true">Save New User</string>
 
     //toasts
     <string name="toast_user_delete_success" translatable="true">User deleted successfully</string>
     <string name="error_saving_user">Please complete all the fields</string>
+    <string name="enter_user">Enter User:</string>
+    <string name="pick_user_list">Or pick a user from History:</string>
+
+
+    //dialog alert
+    <string name="dialog_save" translatable="true">Save</string>
+    <string name="dialog_locate">Locate</string>
 </resources>

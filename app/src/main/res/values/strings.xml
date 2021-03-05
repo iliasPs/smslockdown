@@ -25,7 +25,7 @@
     <string name="description" translatable="true">Περιγραφή: </string>
 
     // edittext activity
-    <string name="button_text" translatable="false">OK </string>
+    <string name="button_text" translatable="true">Αποθήκευση Νέου Χρήστη </string>
     <string name="delete_button_text" translatable="true">Διαγραφή Χρήστη</string>
     <string name="send">Αποστολή SMS</string>
     <string name="new_user">Νέος Χρήστης</string>
@@ -36,5 +36,11 @@
     <string name="error_saving_user">Παρακαλώ συμπληρώστε όλα τα πεδία</string>
     <string name="no_user_available" translatable="false">Please open the App and enter a User</string>
     <string name="title_activity_maps">Map</string>
+    <string name="enter_user" translatable="true">Εισάγετε Χρήστη:</string>
+    <string name="pick_user_list" translatable="true">Ή επιλέξτε χρήστη από το Ιστορικό:</string>
+
+    //dialog alert
+    <string name="dialog_save" translatable="true">Αποθήκευση</string>
+    <string name="dialog_locate">Εντοπισμός</string>
 
 </resources>
