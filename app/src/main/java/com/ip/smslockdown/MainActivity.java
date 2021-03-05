@@ -78,6 +78,10 @@ public class MainActivity extends LocalizationActivity {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
 
+                int id = radioGroup.getCheckedRadioButtonId();
+
+                SmsHelper smsHelper = SmsHelper.getInstance();
+                smsHelper.createSms(user, ((RadioButton) radioGroup.findViewById(id).getTag()));
                 if (i == radioButton1.getId()) {
                     descriptionTv.setText(R.string.sms1_desc);
                     smsToSend = ("1 " + userName.getText() + " " + userAddress.getText());
@@ -160,6 +164,13 @@ public class MainActivity extends LocalizationActivity {
         radioButton6 = binding.sms6;
         sendButton = binding.smsButton;
         adView = binding.adView;
+
+        radioButton1.setTag(1,1);
+        radioButton2.setTag(2,2);
+        radioButton3.setTag(3,3);
+        radioButton4.setTag(4,4);
+        radioButton5.setTag(5,5);
+        radioButton6.setTag(6,6);
 
         descriptionTv.setMovementMethod(new ScrollingMovementMethod());
     }
