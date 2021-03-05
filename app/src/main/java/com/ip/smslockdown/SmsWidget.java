@@ -14,7 +14,7 @@ import com.ip.smslockdown.models.User;
 /**
  * Implementation of App Widget functionality.
  */
-public class smsWidget extends AppWidgetProvider {
+public class SmsWidget extends AppWidgetProvider {
 
     private static final String SMS1 = "sms1";
     private static final String SMS2 = "sms2";
@@ -36,7 +36,7 @@ public class smsWidget extends AppWidgetProvider {
             views.setOnClickPendingIntent(R.id.helpButton, getPendingSelfIntent(context, SMS4));
             views.setOnClickPendingIntent(R.id.familyButton, getPendingSelfIntent(context, SMS5));
             views.setOnClickPendingIntent(R.id.runButton, getPendingSelfIntent(context, SMS6));
-            ComponentName watchWidget = new ComponentName(context, smsWidget.class);
+            ComponentName watchWidget = new ComponentName(context, SmsWidget.class);
             appWidgetManager.updateAppWidget(watchWidget, views);
         }
     }
@@ -104,7 +104,7 @@ public class smsWidget extends AppWidgetProvider {
     private void updateWidget(Context context) {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.sms_widget);
-        ComponentName watchWidget = new ComponentName(context, smsWidget.class);
+        ComponentName watchWidget = new ComponentName(context, SmsWidget.class);
         appWidgetManager.updateAppWidget(watchWidget, remoteViews);
     }
 

@@ -151,7 +151,7 @@ public class MainActivity extends LocalizationActivity {
         toolbar = binding.toolBar;
         descriptionTv = binding.descriptionText;
         userName = binding.userName;
-        userAddress = binding.userAddress;
+        userAddress = binding.userAddressTv;
         radioButton1 = binding.sms1;
         radioButton2 = binding.sms2;
         radioButton3 = binding.sms3;

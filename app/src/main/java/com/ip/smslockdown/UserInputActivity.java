@@ -1,5 +1,6 @@
 package com.ip.smslockdown;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -8,13 +9,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
+import com.ip.smslockdown.databinding.AlertUserInputDialogBinding;
 import com.ip.smslockdown.databinding.UserInputBinding;
 import com.ip.smslockdown.models.User;
 
@@ -25,13 +29,14 @@ public class UserInputActivity extends LocalizationActivity {
     private final Gson gson = new Gson();
     private Toolbar toolbar;
     private UserInputBinding binding;
-    private EditText userNameEditText;
-    private EditText userAddressEditText;
+    private TextView userNameEditText;
+    private TextView userAddressEditText;
     private Button enterUser;
     private Button deleteUser;
     private String name;
     private String address;
     private User user;
+    private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -94,22 +99,93 @@ public class UserInputActivity extends LocalizationActivity {
         enterUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                if (user == null || user.getFullName().isEmpty() || user.getAddress().isEmpty()) {
-                    Toast.makeText(getApplicationContext(), R.string.error_saving_user, Toast.LENGTH_LONG).show();
-                } else {
-                    user.saveUserToCache(getApplicationContext());
-                    intent.putExtra("user", gson.toJson(user));
-                    startActivity(intent);
-                }
+                final AlertDialog alertDialog = new AlertDialog.Builder(getApplicationContext()).create();
+                AlertUserInputDialogBinding binding = AlertUserInputDialogBinding.inflate(getLayoutInflater());
+                EditText userNameEdit = binding.userNameEt;
+                EditText userAddressEdit = binding.userAddressEt;
+                Button locate = binding.locateButton;
+                Button saveUserButton = binding.saveButton;
+                Button cancelButton = binding.cancelButton;
+
+                userNameEdit.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
+
+
+                userAddressEdit.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
+
+                //Open Maps
+                locate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+
+                // save user to firebase and fix ui
+                saveUserButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        if (user == null || user.getFullName().isEmpty() || user.getAddress().isEmpty()) {
+                            Toast.makeText(getApplicationContext(), R.string.error_saving_user, Toast.LENGTH_LONG).show();
+                        } else {
+                            user.saveUserToCache(getApplicationContext());
+                            intent.putExtra("user", gson.toJson(user));
+                            startActivity(intent);
+                        }
+
+                    }
+                });
+
+                // just return
+                cancelButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.cancel();
+                    }
+                });
+
+                alertDialog.setView(binding.getRoot());
+                alertDialog.show();
+
             }
         });
 
         deleteUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                userAddressEditText.getText().clear();
-                userNameEditText.getText().clear();
+                userAddressEditText.setText("");
+                userNameEditText.setText("");
                 user.deleteUserFromCache(getApplicationContext());
             }
         });
@@ -117,8 +193,8 @@ public class UserInputActivity extends LocalizationActivity {
     }
 
     private void initViews(UserInputBinding binding) {
-        userNameEditText = binding.userNameEdit;
-        userAddressEditText = binding.userAddress;
+        userNameEditText = binding.userNameTv;
+        userAddressEditText = binding.userAddressTv;
         enterUser = binding.enterUserButton;
         deleteUser = binding.deleteUserButton;
         toolbar = binding.toolBar;

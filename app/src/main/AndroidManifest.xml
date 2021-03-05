@@ -37,7 +37,7 @@
             android:name=".geofence.MapsActivity"
             android:label="@string/title_activity_maps" />
 
-        <receiver android:name=".smsWidget">
+        <receiver android:name=".SmsWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -67,7 +67,7 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-5047897677984062~3556986884" />
 
-        <receiver android:name=".smsWidget">
+        <receiver android:name=".SmsWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

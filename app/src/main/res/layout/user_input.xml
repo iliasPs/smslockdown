@@ -34,7 +34,7 @@
         android:textColor="@color/browser_actions_bg_grey"
         app:layout_constraintTop_toBottomOf="@id/toolBar"
         app:layout_constraintBottom_toTopOf="@id/userCard"
-        android:text="@string/enter_user"
+        android:text="@string/selected_user"
         app:layout_constraintLeft_toLeftOf="parent"/>
 
     <androidx.cardview.widget.CardView
@@ -60,8 +60,8 @@
             android:orientation="vertical">
 
 
-            <EditText
-                android:id="@+id/userNameEdit"
+            <TextView
+                android:id="@+id/user_name_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/comfortaa_medium"
@@ -79,8 +79,8 @@
                 android:layout_marginRight="10dp"
                 android:background="@color/primary_dark" />
 
-            <EditText
-                android:id="@+id/userAddress"
+            <TextView
+                android:id="@+id/user_address_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/comfortaa_medium"
@@ -167,7 +167,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:background="@drawable/rounded_buttons_bck"
-        android:text="@string/button_text"
+        android:text="@string/enter_user_button"
         android:textAllCaps="false"
         app:layout_constraintTop_toBottomOf="@id/userDropDownCard" />
 

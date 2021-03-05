@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "911602659687",
+    "project_id": "smslockdown-13033",
+    "storage_bucket": "smslockdown-13033.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:911602659687:android:329afebf077cdcb6343fc2",
+        "android_client_info": {
+          "package_name": "com.ip.smslockdown"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "911602659687-2ttc8o4i6keq2bo2vr99hi6b49ospm6t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2S5jh3Jxr4JEJ1bzXDlS522zs4BzFRtg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "911602659687-2ttc8o4i6keq2bo2vr99hi6b49ospm6t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
