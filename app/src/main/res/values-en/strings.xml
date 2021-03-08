@@ -10,12 +10,21 @@
     <string name="sms6">Physical exercise, Pet\'s needs</string>
 
     //sms descriptions
-    <string name="sms1_desc">Movement to the pharmacy or visiting a doctor or to donate blood, in the case that this is recommended after a previous communication. </string>
-    <string name="sms2_desc">Movement to an in-service supply store of basic goods (supermarket, mini-market), where they cannot be sent out. </string>
-    <string name="sms3_desc">Movement to a public service or bank, insofar as electronic transaction is not possible.</string>
-    <string name="sms4_desc">Movement to help people in need or escort minors to/from school.</string>
-    <string name="sms5_desc">Movement to a funeral ceremony under the conditions laid down by law or movement of divorced or separated parents necessary to ensure communication between parents and children, in accordance with the provisions in force.</string>
-    <string name="sms6_desc">Physical exercise outdoors or movement with a pet, individually or per three persons, in the latter case having regard to the necessary distance of 1.5 m.</string>
+<!--    <string name="sms1_desc">Movement to the pharmacy or visiting a doctor or to donate blood, in the case that this is recommended after a previous communication. </string>-->
+<!--    <string name="sms2_desc">Movement to an in-service supply store of basic goods (supermarket, mini-market), where they cannot be sent out. </string>-->
+<!--    <string name="sms3_desc">Movement to a public service or bank, insofar as electronic transaction is not possible.</string>-->
+<!--    <string name="sms4_desc">Movement to help people in need or escort minors to/from school.</string>-->
+<!--    <string name="sms5_desc">Movement to a funeral ceremony under the conditions laid down by law or movement of divorced or separated parents necessary to ensure communication between parents and children, in accordance with the provisions in force.</string>-->
+<!--    <string name="sms6_desc">Physical exercise outdoors or movement with a pet, individually or per three persons, in the latter case having regard to the necessary distance of 1.5 m.</string>-->
+
+    <string-array name="sms_desc">
+        <item>Movement to the pharmacy or visiting a doctor or to donate blood, in the case that this is recommended after a previous communication.</item>
+        <item>Movement to an in-service supply store of basic goods (supermarket, mini-market), where they cannot be sent out. </item>
+        <item>Movement to a public service or bank, insofar as electronic transaction is not possible.</item>
+        <item>Movement to help people in need or escort minors to/from school.</item>
+        <item>Movement to a funeral ceremony under the conditions laid down by law or movement of divorced or separated parents necessary to ensure communication between parents and children, in accordance with the provisions in force..</item>
+        <item>Physical exercise outdoors or movement with a pet, individually or per three persons, in the latter case having regard to the necessary distance of 1.5 m.</item>
+    </string-array>
 
     // editext hints
     <string name="userName">Full name</string>
@@ -40,4 +49,5 @@
     <string name="dialog_save" translatable="true">Save</string>
     <string name="dialog_locate">Locate</string>
     <string name="dialog_cancel">Cancel</string>
+    <string name="user_confirm">Confirm</string>
 </resources>

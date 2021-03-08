@@ -91,6 +91,7 @@
                 android:textColorHint="@color/primary_text"
                 android:textSize="14sp" />
         </LinearLayout>
+
     </androidx.cardview.widget.CardView>
 
     <TextView
@@ -158,6 +159,23 @@
                 android:textColor="@color/primary_text"
                 android:textColorHint="@color/primary_text"
                 android:textSize="14sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/primary_dark" />
+
+            <Button
+                android:id="@+id/user_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:background="@drawable/rounded_buttons_bck"
+                android:text="@string/user_confirm"
+                android:textAllCaps="false"
+                app:layout_constraintTop_toBottomOf="@id/userDropDownCard" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

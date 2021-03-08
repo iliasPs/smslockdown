@@ -1,7 +1,6 @@
 package com.ip.smslockdown;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -16,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.google.android.gms.ads.AdRequest;
@@ -25,7 +25,12 @@ import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.gson.Gson;
 import com.ip.smslockdown.databinding.ActivityMainBinding;
+import com.ip.smslockdown.db.AppDatabase;
+import com.ip.smslockdown.db.UserDao;
+import com.ip.smslockdown.helpers.SmsHelper;
+import com.ip.smslockdown.models.SmsCode;
 import com.ip.smslockdown.models.User;
+import com.ip.smslockdown.viewmodel.UserViewModel;
 
 import lombok.Getter;
 
@@ -34,6 +39,7 @@ public class MainActivity extends LocalizationActivity {
     private final static String TAG = MainActivity.class.getSimpleName();
     private final static String PHONE_NUMBER = "13033";
     private final Gson gson = new Gson();
+    private final SmsHelper smsHelper = SmsHelper.getInstance();
     @Getter
     public User user;
     private AdView adView;
@@ -50,6 +56,9 @@ public class MainActivity extends LocalizationActivity {
     private Button sendButton;
     private Toolbar toolbar;
     private String smsToSend;
+    private AppDatabase db;
+    private UserDao userDao;
+    private UserViewModel userViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +70,7 @@ public class MainActivity extends LocalizationActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
         RadioGroup radioGroup = binding.smsRadioGroup;
+        userViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(UserViewModel.class);
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
@@ -69,39 +79,30 @@ public class MainActivity extends LocalizationActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
 
-        if (User.builder().build().getUserFromCache(getApplicationContext()) != null) {
-            userName.setText(User.builder().build().getUserFromCache(getApplicationContext()).getFullName());
-            userAddress.setText(User.builder().build().getUserFromCache(getApplicationContext()).getAddress());
+
+        try {
+            if(userViewModel.getUserByUsage(true)!=null){
+                Log.d(TAG, "onCreate: not null from getUserByUsage ");
+                user = userViewModel.getUserByUsage(true);
+                userName.setText(user.getFullName());
+                userAddress.setText(user.getAddress());
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "onCreate: trying to get last used user failed" + e.getMessage());
         }
+
+//        if (User.builder().build().getUserFromCache(getApplicationContext()) != null) {
+//            userName.setText(User.builder().build().getUserFromCache(getApplicationContext()).getFullName());
+//            userAddress.setText(User.builder().build().getUserFromCache(getApplicationContext()).getAddress());
+//        }
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
-
+                String[] smsArray = getResources().getStringArray(R.array.sms_desc);
                 int id = radioGroup.getCheckedRadioButtonId();
-
-                SmsHelper smsHelper = SmsHelper.getInstance();
-                smsHelper.createSms(user, ((RadioButton) radioGroup.findViewById(id).getTag()));
-                if (i == radioButton1.getId()) {
-                    descriptionTv.setText(R.string.sms1_desc);
-                    smsToSend = ("1 " + userName.getText() + " " + userAddress.getText());
-                } else if (i == radioButton2.getId()) {
-                    smsToSend = ("2 " + userName.getText() + " " + userAddress.getText());
-                    descriptionTv.setText(R.string.sms2_desc);
-                } else if (i == radioButton3.getId()) {
-                    smsToSend = ("3 " + userName.getText() + " " + userAddress.getText());
-                    descriptionTv.setText(R.string.sms3_desc);
-                } else if (i == radioButton4.getId()) {
-                    smsToSend = ("4 " + userName.getText() + " " + userAddress.getText());
-                    descriptionTv.setText(R.string.sms4_desc);
-                } else if (i == radioButton5.getId()) {
-                    smsToSend = ("5 " + userName.getText() + " " + userAddress.getText());
-                    descriptionTv.setText(R.string.sms5_desc);
-                } else if (i == radioButton6.getId()) {
-                    smsToSend = ("6 " + userName.getText() + " " + userAddress.getText());
-                    descriptionTv.setText(R.string.sms6_desc);
-                }
-
+                descriptionTv.setText(smsArray[((SmsCode) radioGroup.findViewById(id).getTag()).code-1]);
+                smsToSend = smsHelper.createSms(user, radioGroup.findViewById(id).getTag());
             }
         });
 
@@ -121,7 +122,7 @@ public class MainActivity extends LocalizationActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendSms(PHONE_NUMBER, smsToSend);
+                smsHelper.sendSms(smsToSend, getApplicationContext());
                 Log.d(TAG, "sms to send " + smsToSend);
             }
         });
@@ -165,20 +166,16 @@ public class MainActivity extends LocalizationActivity {
         sendButton = binding.smsButton;
         adView = binding.adView;
 
-        radioButton1.setTag(1,1);
-        radioButton2.setTag(2,2);
-        radioButton3.setTag(3,3);
-        radioButton4.setTag(4,4);
-        radioButton5.setTag(5,5);
-        radioButton6.setTag(6,6);
+
+        SmsCode code = SmsCode.builder().build();
+        radioButton1.setTag(code.withCode(1));
+        radioButton2.setTag(code.withCode(2));
+        radioButton3.setTag(code.withCode(3));
+        radioButton4.setTag(code.withCode(4));
+        radioButton5.setTag(code.withCode(5));
+        radioButton6.setTag(code.withCode(6));
 
         descriptionTv.setMovementMethod(new ScrollingMovementMethod());
-    }
-
-    public void sendSms(String phoneNumber, String message) {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + phoneNumber));
-        intent.putExtra("sms_body", message);
-        startActivity(intent);
     }
 
 }
