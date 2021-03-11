@@ -10,31 +10,29 @@ import com.ip.smslockdown.models.User;
 
 public class SmsHelper {
 
-    private static SmsHelper INSTANCE;
     private static final String PHONE_NUMBER = "13033";
+    private static final String PHONE_NUMBER_COMMERCIAL = "13032";
+    private static final String MOVEMENT = "ΜΕΤΑΚΙΝΗΣΗ";
+    private static final String COMMERCIAL = "ΕΜΠΟΡΙΚΟ ΚΑΤΑΣΤΗΜΑ";
     private static final String TAG = "SmsHelper";
 
-    private SmsHelper(){
 
-    }
-
-    public static SmsHelper getInstance(){
-        synchronized (SmsHelper.class){
-            if (INSTANCE == null){
-                INSTANCE = new SmsHelper();
-            }
-        }
-        return INSTANCE;
-    }
-
-    public void sendSms(String message, Context context) {
+    public static void sendSms(String message, Context context) {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + PHONE_NUMBER));
         intent.putExtra("sms_body", message);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 
-    public String createSms(User user, Object obj){
+    public static void sendCommercialSms(String message, Context context) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + PHONE_NUMBER_COMMERCIAL));
+        intent.putExtra("sms_body", message);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+
+    public static String createSms(User user, Object obj){
 
         if(obj instanceof SmsCode) {
             Log.d(TAG, "createSms: " + ((SmsCode) obj).code);
@@ -43,8 +41,12 @@ public class SmsHelper {
         return null;
     }
 
-    public String createSms(User user, String action){
+    public static String createSms(User user, String action){
             return (action + " " + user.getFullName() + " " + user.getAddress());
+    }
+
+    public static String createCommercialSms(User user){
+        return (MOVEMENT + user.getFullName() + COMMERCIAL);
     }
 
 }

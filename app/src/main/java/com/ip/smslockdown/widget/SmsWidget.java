@@ -25,7 +25,6 @@ import com.ip.smslockdown.models.User;
 public class SmsWidget extends AppWidgetProvider {
 
     private static final String TAG = "SmsWidget";
-    private static final SmsHelper smsHelper = SmsHelper.getInstance();
     User user;
 
     @Override
@@ -72,10 +71,10 @@ public class SmsWidget extends AppWidgetProvider {
                 Log.d(TAG, "run: " + intent.getAction());
 
                 if (Character.isDigit(intent.getAction().charAt(0))) {
-                    String smsToSend = smsHelper.createSms(user, intent.getAction());
+                    String smsToSend = SmsHelper.createSms(user, intent.getAction());
                     Log.d(TAG, "onReceive: " + smsToSend);
                     updateWidget(context);
-                    smsHelper.sendSms(smsToSend, context);
+                    SmsHelper.sendSms(smsToSend, context);
                 }
                 if (user == null) {
                     new Handler(Looper.getMainLooper()).post(new Runnable() {

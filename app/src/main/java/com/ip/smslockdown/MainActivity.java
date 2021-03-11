@@ -29,17 +29,11 @@ import com.ip.smslockdown.helpers.SmsHelper;
 import com.ip.smslockdown.models.SmsCode;
 import com.ip.smslockdown.models.User;
 import com.ip.smslockdown.viewmodel.UserViewModel;
-import com.shawnlin.preferencesmanager.PreferencesManager;
-
-import lombok.Getter;
 
 public class MainActivity extends LocalizationActivity {
 
     private final static String TAG = MainActivity.class.getSimpleName();
-    private final static String PHONE_NUMBER = "13033";
     private final Gson gson = new Gson();
-    private final SmsHelper smsHelper = SmsHelper.getInstance();
-    @Getter
     public User user;
     private AdView adView;
     private ActivityMainBinding binding;
@@ -75,15 +69,12 @@ public class MainActivity extends LocalizationActivity {
         });
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
-        new PreferencesManager(this).setName("manager").init();
 
         try {
             if(userViewModel.getUserByUsage(true)!=null){
-                Log.d(TAG, "onCreate: not null from getUserByUsage ");
                 user = userViewModel.getUserByUsage(true);
                 userName.setText(user.getFullName());
                 userAddress.setText(user.getAddress());
-                PreferencesManager.putObject("user", user);
             }
         } catch (Exception e) {
             Log.d(TAG, "onCreate: trying to get last used user failed" + e.getMessage());
@@ -100,7 +91,7 @@ public class MainActivity extends LocalizationActivity {
                 String[] smsArray = getResources().getStringArray(R.array.sms_desc);
                 int id = radioGroup.getCheckedRadioButtonId();
                 descriptionTv.setText(smsArray[((SmsCode) radioGroup.findViewById(id).getTag()).code-1]);
-                smsToSend = smsHelper.createSms(user, radioGroup.findViewById(id).getTag());
+                smsToSend = SmsHelper.createSms(user, radioGroup.findViewById(id).getTag());
             }
         });
 
@@ -120,7 +111,7 @@ public class MainActivity extends LocalizationActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                smsHelper.sendSms(smsToSend, getApplicationContext());
+                SmsHelper.sendSms(smsToSend, getApplicationContext());
                 Log.d(TAG, "sms to send " + smsToSend);
             }
         });
