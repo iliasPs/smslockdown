@@ -47,6 +47,8 @@ dependencies {
     implementation 'com.akexorcist:localization:1.2.6'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.android.gms:play-services-location:18.0.0'
+    compile 'com.shawnlin:PreferencesManager:1.0.3'
+
 
     def room_version = "2.2.6"
     implementation "androidx.room:room-runtime:$room_version"

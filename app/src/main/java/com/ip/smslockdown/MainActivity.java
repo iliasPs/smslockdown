@@ -25,12 +25,11 @@ import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.gson.Gson;
 import com.ip.smslockdown.databinding.ActivityMainBinding;
-import com.ip.smslockdown.db.AppDatabase;
-import com.ip.smslockdown.db.UserDao;
 import com.ip.smslockdown.helpers.SmsHelper;
 import com.ip.smslockdown.models.SmsCode;
 import com.ip.smslockdown.models.User;
 import com.ip.smslockdown.viewmodel.UserViewModel;
+import com.shawnlin.preferencesmanager.PreferencesManager;
 
 import lombok.Getter;
 
@@ -56,8 +55,6 @@ public class MainActivity extends LocalizationActivity {
     private Button sendButton;
     private Toolbar toolbar;
     private String smsToSend;
-    private AppDatabase db;
-    private UserDao userDao;
     private UserViewModel userViewModel;
 
     @Override
@@ -78,7 +75,7 @@ public class MainActivity extends LocalizationActivity {
         });
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
-
+        new PreferencesManager(this).setName("manager").init();
 
         try {
             if(userViewModel.getUserByUsage(true)!=null){
@@ -86,6 +83,7 @@ public class MainActivity extends LocalizationActivity {
                 user = userViewModel.getUserByUsage(true);
                 userName.setText(user.getFullName());
                 userAddress.setText(user.getAddress());
+                PreferencesManager.putObject("user", user);
             }
         } catch (Exception e) {
             Log.d(TAG, "onCreate: trying to get last used user failed" + e.getMessage());

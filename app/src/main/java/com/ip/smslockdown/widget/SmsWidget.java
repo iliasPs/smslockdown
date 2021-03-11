@@ -6,14 +6,15 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
-import androidx.room.Room;
-
 import com.ip.smslockdown.R;
 import com.ip.smslockdown.db.AppDatabase;
-import com.ip.smslockdown.db.UserDao;
+import com.ip.smslockdown.helpers.AppExecutors;
 import com.ip.smslockdown.helpers.SmsHelper;
 import com.ip.smslockdown.models.SmsCode;
 import com.ip.smslockdown.models.User;
@@ -23,6 +24,7 @@ import com.ip.smslockdown.models.User;
  */
 public class SmsWidget extends AppWidgetProvider {
 
+    private static final String TAG = "SmsWidget";
     private static final SmsHelper smsHelper = SmsHelper.getInstance();
     User user;
 
@@ -32,12 +34,12 @@ public class SmsWidget extends AppWidgetProvider {
         SmsCode smsCode = SmsCode.builder().build();
         for (int appWidgetId : appWidgetIds) {
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.sms_widget);
-            views.setOnClickPendingIntent(R.id.docButton, getPendingSelfIntent(context, String.valueOf(smsCode.withCode(1))));
-            views.setOnClickPendingIntent(R.id.shopButton, getPendingSelfIntent(context, String.valueOf(smsCode.withCode(2))));
-            views.setOnClickPendingIntent(R.id.bankButton, getPendingSelfIntent(context, String.valueOf(smsCode.withCode(3))));
-            views.setOnClickPendingIntent(R.id.helpButton, getPendingSelfIntent(context, String.valueOf(smsCode.withCode(4))));
-            views.setOnClickPendingIntent(R.id.familyButton, getPendingSelfIntent(context, String.valueOf(smsCode.withCode(5))));
-            views.setOnClickPendingIntent(R.id.runButton, getPendingSelfIntent(context, String.valueOf(smsCode.withCode(6))));
+            views.setOnClickPendingIntent(R.id.docButton, getPendingSelfIntent(context, smsCode.withCode(1)));
+            views.setOnClickPendingIntent(R.id.shopButton, getPendingSelfIntent(context, smsCode.withCode(2)));
+            views.setOnClickPendingIntent(R.id.bankButton, getPendingSelfIntent(context, smsCode.withCode(3)));
+            views.setOnClickPendingIntent(R.id.helpButton, getPendingSelfIntent(context, smsCode.withCode(4)));
+            views.setOnClickPendingIntent(R.id.familyButton, getPendingSelfIntent(context, smsCode.withCode(5)));
+            views.setOnClickPendingIntent(R.id.runButton, getPendingSelfIntent(context, smsCode.withCode(6)));
             ComponentName watchWidget = new ComponentName(context, SmsWidget.class);
             appWidgetManager.updateAppWidget(watchWidget, views);
         }
@@ -54,26 +56,40 @@ public class SmsWidget extends AppWidgetProvider {
     }
 
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(final Context context, final Intent intent) {
         super.onReceive(context, intent);
 
+        AppDatabase db = AppDatabase.getDatabase(context);
+        Log.d(TAG, "onReceive: " + db.toString());
 
-        AppDatabase db = Room.databaseBuilder(context, AppDatabase.class, "database-name").build();
-         UserDao userDao = db.userDao();
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
 
-        if(userDao.loadUserByUsage(true)!=null){
-            user = userDao.loadUserByUsage(true);
-        }
+            @Override
+            public void run() {
+                user = AppDatabase.getDatabase(context).userDao().loadUserByUsage(true);
+                Log.d(TAG, "onReceive: " + user.getFullName());
 
-        if (!doesUserExist(user, context)) {
-            return;
-        }
+                Log.d(TAG, "run: " + intent.getAction());
 
-        String smsToSend = smsHelper.createSms(user, intent.getAction());
-        updateWidget(context);
-        smsHelper.sendSms(smsToSend, context);
+                if (Character.isDigit(intent.getAction().charAt(0))) {
+                    String smsToSend = smsHelper.createSms(user, intent.getAction());
+                    Log.d(TAG, "onReceive: " + smsToSend);
+                    updateWidget(context);
+                    smsHelper.sendSms(smsToSend, context);
+                }
+                if (user == null) {
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(context, R.string.no_user_available, Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+                }
+            }
+        });
+
     }
-
 
     private void updateWidget(Context context) {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
@@ -82,17 +98,10 @@ public class SmsWidget extends AppWidgetProvider {
         appWidgetManager.updateAppWidget(watchWidget, remoteViews);
     }
 
-    private boolean doesUserExist(User user, Context context) {
-        if (user != null) {
-            return true;
-        }
-        Toast.makeText(context, R.string.no_user_available, Toast.LENGTH_LONG).show();
-        return false;
-    }
-
-    protected PendingIntent getPendingSelfIntent(Context context, String action) {
+    protected PendingIntent getPendingSelfIntent(Context context, SmsCode action) {
         Intent intent = new Intent(context, getClass());
-        intent.setAction(action);
+        Log.d(TAG, "getPendingSelfIntent: " + action);
+        intent.setAction(String.valueOf(action.code));
         return PendingIntent.getBroadcast(context, 0, intent, 0);
     }
 }

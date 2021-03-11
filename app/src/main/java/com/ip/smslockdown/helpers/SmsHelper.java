@@ -3,6 +3,7 @@ package com.ip.smslockdown.helpers;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 
 import com.ip.smslockdown.models.SmsCode;
 import com.ip.smslockdown.models.User;
@@ -36,9 +37,14 @@ public class SmsHelper {
     public String createSms(User user, Object obj){
 
         if(obj instanceof SmsCode) {
+            Log.d(TAG, "createSms: " + ((SmsCode) obj).code);
             return (((SmsCode) obj).code + " " + user.getFullName() + " " + user.getAddress());
         }
         return null;
+    }
+
+    public String createSms(User user, String action){
+            return (action + " " + user.getFullName() + " " + user.getAddress());
     }
 
 }
