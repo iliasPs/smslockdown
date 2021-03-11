@@ -10,13 +10,6 @@
     <string name="sms6">Physical exercise, Pet\'s needs</string>
 
     //sms descriptions
-<!--    <string name="sms1_desc">Movement to the pharmacy or visiting a doctor or to donate blood, in the case that this is recommended after a previous communication. </string>-->
-<!--    <string name="sms2_desc">Movement to an in-service supply store of basic goods (supermarket, mini-market), where they cannot be sent out. </string>-->
-<!--    <string name="sms3_desc">Movement to a public service or bank, insofar as electronic transaction is not possible.</string>-->
-<!--    <string name="sms4_desc">Movement to help people in need or escort minors to/from school.</string>-->
-<!--    <string name="sms5_desc">Movement to a funeral ceremony under the conditions laid down by law or movement of divorced or separated parents necessary to ensure communication between parents and children, in accordance with the provisions in force.</string>-->
-<!--    <string name="sms6_desc">Physical exercise outdoors or movement with a pet, individually or per three persons, in the latter case having regard to the necessary distance of 1.5 m.</string>-->
-
     <string-array name="sms_desc">
         <item>Movement to the pharmacy or visiting a doctor or to donate blood, in the case that this is recommended after a previous communication.</item>
         <item>Movement to an in-service supply store of basic goods (supermarket, mini-market), where they cannot be sent out. </item>
@@ -33,7 +26,7 @@
     // Description TV
     <string name="description">Description: </string>
     <string name="send">Send SMS</string>
-    <string name="new_user">New User</string>
+    <string name="new_user">Edit User</string>
 
     <string name="delete_button_text">Delete User</string>
     <string name="enter_user_button" translatable="true">Enter New User</string>

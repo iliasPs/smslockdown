@@ -15,14 +15,15 @@ import java.util.List;
 public class UserViewModel extends AndroidViewModel {
 
     private static final String TAG = "UserViewModel";
-    private UserRepository userRepository;
-    private LiveData<List<User>> usersList;
+    private final UserRepository userRepository;
+    private final LiveData<List<User>> usersList;
 
     public UserViewModel(@NonNull Application application) {
         super(application);
 
         userRepository = new UserRepository(application);
         usersList = userRepository.getAllUsers();
+        Log.d(TAG, "UserViewModel: " + usersList.getValue());
     }
 
     public LiveData<List<User>> getUsersList(){
@@ -30,7 +31,7 @@ public class UserViewModel extends AndroidViewModel {
     }
 
     public void insert(User user){
-
+        Log.d(TAG, "insert: " +user.getFullName());
         userRepository.insertUser(user);
     }
 
@@ -39,18 +40,8 @@ public class UserViewModel extends AndroidViewModel {
         userRepository.deleteUser(user);
     }
 
-    public Boolean checkUserExist(User user){
-
-      return userRepository.isUserInDb(user);
-    }
-
-    public User getUser(int id) throws Exception {
-
-       return userRepository.getUser(id);
-    }
 
     public User getUserByUsage(boolean isLastUsed)  {
-
 
         try {
             return userRepository.getUserByLastUsed(isLastUsed);
@@ -60,14 +51,13 @@ public class UserViewModel extends AndroidViewModel {
         return null;
     }
 
-    public void updateUser(User user, boolean lastUsed){
+    public void updateUser(User user){
 
-        userRepository.updateUser(user, lastUsed);
+        userRepository.updateUser(user);
     }
 
-    public User getUserByDetails(User user) throws Exception {
-
-        return userRepository.getUserFromNameAndAddress(user.getFullName(), user.getAddress());
+    public void updateUsers(List<User> users){
+        userRepository.updateUsers(users);
     }
 
 }

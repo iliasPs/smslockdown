@@ -18,12 +18,6 @@
         <item>Μετάβαση σε τελετή κηδείας υπό τους όρους που προβλέπει ο νόμος ή μετάβαση διαζευγμένων γονέων ή γονέων που τελούν σε διάσταση που είναι αναγκαία για τη διασφάλιση της επικοινωνίας γονέων και τέκνων, σύμφωνα με τις κείμενες διατάξεις.</item>
         <item>Σωματική άσκηση σε εξωτερικό χώρο ή κίνηση με κατοικίδιο ζώο, ατομικά ή ανά δύο άτομα, τηρώντας στην τελευταία αυτή περίπτωση την αναγκαία απόσταση 1,5 μέτρου.</item>
     </string-array>
-<!--    <string name="sms1_desc" translatable="true">Μετάβαση σε φαρμακείο ή επίσκεψη στον γιατρό, εφόσον αυτό συνιστάται ύστερα από σχετική επικοινωνία </string>-->
-<!--    <string name="sms2_desc" translatable="true">Μετάβαση σε εν λειτουργία κατάστημα ή σε σημείο προμηθειών αγαθών πρώτης ανάγκης (σούπερ μάρκετ, μίνι μάρκετ, κρεοπωλείο), όπου δεν είναι δυνατή η αποστολή τους. </string>-->
-<!--    <string name="sms3_desc" translatable="true">Μετάβαση σε δημόσια υπηρεσία (π.χ. εφορία) ή τράπεζα, στο μέτρο που δεν είναι δυνατή η ηλεκτρονική συναλλαγή.</string>-->
-<!--    <string name="sms4_desc" translatable="true">Κίνηση για παροχή βοήθειας σε ανθρώπους που βρίσκονται σε ανάγκη ή συνοδεία ανήλικων μαθητών από/προς το σχολείο.</string>-->
-<!--    <string name="sms5_desc" translatable="true">Μετάβαση σε τελετή κηδείας υπό τους όρους που προβλέπει ο νόμος ή μετάβαση διαζευγμένων γονέων ή γονέων που τελούν σε διάσταση που είναι αναγκαία για τη διασφάλιση της επικοινωνίας γονέων και τέκνων, σύμφωνα με τις κείμενες διατάξεις.</string>-->
-<!--    <string name="sms6_desc" translatable="true">Σωματική άσκηση σε εξωτερικό χώρο ή κίνηση με κατοικίδιο ζώο, ατομικά ή ανά δύο άτομα, τηρώντας στην τελευταία αυτή περίπτωση την αναγκαία απόσταση 1,5 μέτρου.</string>-->
 
     // editext hints
     <string name="userName" translatable="true">Ονοματεπώνυμο</string>
@@ -36,14 +30,14 @@
     <string name="enter_user_button" translatable="true">Εισαγωγή Νέου Χρήστη </string>
     <string name="delete_button_text" translatable="true">Διαγραφή Χρήστη</string>
     <string name="send">Αποστολή SMS</string>
-    <string name="new_user">Νέος Χρήστης</string>
+    <string name="new_user">Επεξεργασία Χρήστη</string>
 
     //toasts
     <string name="toast_user_delete_success" translatable="true">Επιτυχής Διαγραφή Χρήστη</string>
     <string name="toast_user_delete_error" translatable="false">Error...</string>
     <string name="error_saving_user">Παρακαλώ συμπληρώστε όλα τα πεδία</string>
     <string name="no_user_available" translatable="false">Please open the App and enter a User</string>
-    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_maps" translatable="false">Map</string>
     <string name="selected_user" translatable="true">Επιλεγμένος Χρήστης:</string>
     <string name="pick_user_list" translatable="true">Ή επιλέξτε χρήστη από το Ιστορικό:</string>
 

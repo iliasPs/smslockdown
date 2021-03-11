@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--<layout-->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -28,40 +28,37 @@
         android:id="@+id/enter_user_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/primary"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
-        android:textColor="@color/browser_actions_bg_grey"
-        app:layout_constraintTop_toBottomOf="@id/toolBar"
-        app:layout_constraintBottom_toTopOf="@id/userCard"
+        android:background="@color/primary"
         android:text="@string/selected_user"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        android:textColor="@color/browser_actions_bg_grey"
+        app:layout_constraintBottom_toTopOf="@id/userCard"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolBar" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/userCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginBottom="20dp"
         android:layout_marginEnd="20dp"
         android:background="@color/icons"
         app:cardCornerRadius="10dp"
         app:cardElevation="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintStart_toStartOf="@id/toolBar"
         app:layout_constraintTop_toBottomOf="@id/enter_user_tv">
 
         <LinearLayout
-            android:id="@+id/editTextLinear"
+            android:id="@+id/selected_user_window"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/icons"
             android:orientation="vertical">
 
-
             <TextView
-                android:id="@+id/user_name_tv"
+                android:id="@+id/user_selected_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/comfortaa_medium"
@@ -80,7 +77,7 @@
                 android:background="@color/primary_dark" />
 
             <TextView
-                android:id="@+id/user_address_tv"
+                android:id="@+id/user_selected_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/comfortaa_medium"
@@ -91,92 +88,47 @@
                 android:textColorHint="@color/primary_text"
                 android:textSize="14sp" />
         </LinearLayout>
-
     </androidx.cardview.widget.CardView>
+
 
     <TextView
         android:id="@+id/pick_user_from_list_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/primary"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:textColor="@color/browser_actions_bg_grey"
-        app:layout_constraintTop_toBottomOf="@id/userCard"
-        app:layout_constraintBottom_toTopOf="@id/userDropDownCard"
+        android:background="@color/primary"
         android:text="@string/pick_user_list"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        android:textColor="@color/browser_actions_bg_grey"
+        app:layout_constraintBottom_toTopOf="@id/userDropDownCard"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/userCard" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/userDropDownCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginBottom="20dp"
         android:layout_marginEnd="20dp"
-        android:background="@color/icons"
+        android:layout_marginBottom="20dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintStart_toStartOf="@id/toolBar"
         app:layout_constraintTop_toBottomOf="@id/pick_user_from_list_tv">
 
-        <LinearLayout
-            android:id="@+id/list_linear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/user_list_rv"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
             android:background="@color/icons"
-            android:orientation="vertical">
-
-            <Spinner
-                android:id="@+id/drop_down_user_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/comfortaa_medium"
-                android:hint="@string/userName"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:textColor="@color/primary_text"
-                android:textColorHint="@color/primary_text"
-                android:textSize="14sp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@color/primary_dark" />
-
-            <Spinner
-                android:id="@+id/drop_down_user_address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/comfortaa_medium"
-                android:hint="@string/userAddress"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:textColor="@color/primary_text"
-                android:textColorHint="@color/primary_text"
-                android:textSize="14sp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@color/primary_dark" />
-
-            <Button
-                android:id="@+id/user_confirm"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:background="@drawable/rounded_buttons_bck"
-                android:text="@string/user_confirm"
-                android:textAllCaps="false"
-                app:layout_constraintTop_toBottomOf="@id/userDropDownCard" />
-        </LinearLayout>
+            android:fontFamily="@font/comfortaa_medium"
+            android:hint="@string/userName"
+            android:padding="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:spinnerMode="dropdown"
+            android:textSize="14sp" />
     </androidx.cardview.widget.CardView>
 
     <Button
@@ -198,4 +150,6 @@
         android:text="@string/delete_button_text"
         android:textAllCaps="false"
         app:layout_constraintTop_toBottomOf="@id/enter_user_button" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout><!--</layout>-->

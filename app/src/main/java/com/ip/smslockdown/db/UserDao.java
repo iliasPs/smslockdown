@@ -6,6 +6,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.ip.smslockdown.models.User;
 
@@ -26,8 +27,8 @@ public interface UserDao {
     @Query("SELECT * FROM user WHERE last_used=:lastUsed")
     User loadUserByUsage(boolean lastUsed);
 
-    @Query("UPDATE user SET last_used= :lastUsed WHERE uid = :id")
-    void updateUser(int id, boolean lastUsed);
+    @Update
+    void updateUser(User user);
 
     @Query("SELECT * FROM user WHERE full_name= :fullName AND address= :address")
     User getUserFromNameAndAddress(String fullName, String address);
@@ -37,5 +38,8 @@ public interface UserDao {
 
     @Delete
     void delete(User user);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void updateUsers(List<User> users);
 }
 
