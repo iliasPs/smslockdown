@@ -18,20 +18,11 @@ public interface UserDao {
     @Query("SELECT * FROM user")
     LiveData<List<User>> getAll();
 
-    @Query("SELECT * FROM user WHERE uid IN (:userIds)")
-    LiveData<List<User>> loadAllByIds(int[] userIds);
-
-    @Query("SELECT * FROM user WHERE uid IN (:userIds)")
-    User loadUserById(int userIds);
-
     @Query("SELECT * FROM user WHERE last_used=:lastUsed")
     User loadUserByUsage(boolean lastUsed);
 
     @Update
     void updateUser(User user);
-
-    @Query("SELECT * FROM user WHERE full_name= :fullName AND address= :address")
-    User getUserFromNameAndAddress(String fullName, String address);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertUser(User user);

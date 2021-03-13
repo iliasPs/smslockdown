@@ -66,10 +66,6 @@ public class SmsWidget extends AppWidgetProvider {
             @Override
             public void run() {
                 user = AppDatabase.getDatabase(context).userDao().loadUserByUsage(true);
-                Log.d(TAG, "onReceive: " + user.getFullName());
-
-                Log.d(TAG, "run: " + intent.getAction());
-
                 if (Character.isDigit(intent.getAction().charAt(0))) {
                     String smsToSend = SmsHelper.createSms(user, intent.getAction());
                     Log.d(TAG, "onReceive: " + smsToSend);

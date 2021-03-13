@@ -43,4 +43,6 @@
     <string name="dialog_locate">Locate</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="user_confirm">Confirm</string>
+    <string name="input_user" translatable="true">New User</string>
+
 </resources>

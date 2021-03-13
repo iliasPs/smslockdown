@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/alert_root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="100dp"
     android:background="@color/primary">
 
     <TextView
         android:id="@+id/user_entry_hint"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="8dp"
-        android:text="@string/selected_user"
+        android:text="@string/input_user"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/userCard"
-        android:layout_width="match_parent"
+        android:id="@+id/user_edit_card"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
@@ -27,12 +29,12 @@
         app:cardCornerRadius="10dp"
         app:cardElevation="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/user_entry_hint">
 
         <LinearLayout
             android:id="@+id/editTextLinear"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/icons"
             android:orientation="vertical">
@@ -68,6 +70,16 @@
                 android:textColor="@color/primary_text"
                 android:textColorHint="@color/primary_text"
                 android:textSize="14sp" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/places_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/icons"
+                android:orientation="vertical"
+                android:padding="10dp"
+                app:layout_constrainedHeight="true" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -76,22 +88,19 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:orientation="horizontal"
-        android:gravity="center_horizontal"
+        android:weightSum="2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/userCard">
-
-        <Button
-            android:id="@+id/locate_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableStart="@android:drawable/ic_menu_mylocation"
-            android:text="@string/dialog_locate"
-            android:textAllCaps="false" />
+        app:layout_constraintTop_toBottomOf="@id/user_edit_card">
 
         <Button
             android:id="@+id/cancel_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:background="@color/accent"
             android:text="@string/dialog_cancel"
             android:textAllCaps="false" />
 
@@ -99,10 +108,10 @@
             android:id="@+id/save_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:background="@color/accent"
             android:text="@string/dialog_save"
             android:textAllCaps="false" />
-
     </LinearLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

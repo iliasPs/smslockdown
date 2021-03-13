@@ -33,12 +33,12 @@
         android:background="@color/primary"
         android:text="@string/selected_user"
         android:textColor="@color/browser_actions_bg_grey"
-        app:layout_constraintBottom_toTopOf="@id/userCard"
+        app:layout_constraintBottom_toTopOf="@id/user_edit_card"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolBar" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/userCard"
+        android:id="@+id/user_edit_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -102,7 +102,7 @@
         android:textColor="@color/browser_actions_bg_grey"
         app:layout_constraintBottom_toTopOf="@id/userDropDownCard"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/userCard" />
+        app:layout_constraintTop_toBottomOf="@id/user_edit_card" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/userDropDownCard"
@@ -152,4 +152,4 @@
         app:layout_constraintTop_toBottomOf="@id/enter_user_button" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout><!--</layout>-->
+</androidx.constraintlayout.widget.ConstraintLayout>

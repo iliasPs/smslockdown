@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/primary_dark"
-            app:layout_constraintBottom_toTopOf="@id/userCard"
+            app:layout_constraintBottom_toTopOf="@id/user_edit_card"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
@@ -32,7 +32,7 @@
         </androidx.appcompat.widget.Toolbar>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/userCard"
+            android:id="@+id/user_edit_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -96,7 +96,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.85"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/userCard">
+            app:layout_constraintTop_toBottomOf="@id/user_edit_card">
 
             <RadioGroup
                 android:id="@+id/smsRadioGroup"

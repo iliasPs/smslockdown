@@ -38,7 +38,6 @@
     <string name="error_saving_user">Παρακαλώ συμπληρώστε όλα τα πεδία</string>
     <string name="no_user_available" translatable="false">Please open the App and enter a User</string>
     <string name="title_activity_maps" translatable="false">Map</string>
-    <string name="selected_user" translatable="true">Επιλεγμένος Χρήστης:</string>
     <string name="pick_user_list" translatable="true">Ή επιλέξτε χρήστη από το Ιστορικό:</string>
 
     //dialog alert
@@ -46,5 +45,8 @@
     <string name="dialog_locate">Εντοπισμός</string>
     <string name="dialog_cancel">Ακύρωση</string>
     <string name="user_confirm">Επιβεβαίωση</string>
+    <string name="selected_user" translatable="true">Επιλεγμένος Χρήστης:</string>
+    <string name="input_user" translatable="true">Εισαγωγή Χρήστη</string>
+
 
 </resources>

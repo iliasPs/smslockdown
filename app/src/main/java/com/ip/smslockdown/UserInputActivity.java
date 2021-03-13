@@ -1,11 +1,10 @@
 package com.ip.smslockdown;
 
-import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -16,20 +15,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
-import com.google.gson.Gson;
-import com.ip.smslockdown.databinding.AlertUserInputDialogBinding;
+import com.google.android.gms.common.util.CollectionUtils;
 import com.ip.smslockdown.databinding.UserInputBinding;
 import com.ip.smslockdown.models.User;
 import com.ip.smslockdown.viewmodel.UserViewModel;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 public class UserInputActivity extends LocalizationActivity implements UserAdapter.UserClickListener {
 
     private static final String TAG = "UserInputActivity";
-    private final Gson gson = new Gson();
     private Toolbar toolbar;
     private UserInputBinding binding;
     private Button enterUser;
@@ -39,6 +35,8 @@ public class UserInputActivity extends LocalizationActivity implements UserAdapt
     private RecyclerView recyclerView;
     private TextView selectedUserTv;
     private TextView selectedUserAddressTv;
+    private User clickedUserFromRv;
+    private UserAdapter userAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,10 +51,11 @@ public class UserInputActivity extends LocalizationActivity implements UserAdapt
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setLanguage(getCurrentLanguage());
 
+
         userViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(UserViewModel.class);
 
         try {
-            if(userViewModel.getUserByUsage(true)!=null){
+            if (userViewModel.getUserByUsage(true) != null) {
                 Log.d(TAG, "onCreate: not null from getUserByUsage ");
                 User user = userViewModel.getUserByUsage(true);
                 selectedUserTv.setText(user.getFullName());
@@ -66,93 +65,41 @@ public class UserInputActivity extends LocalizationActivity implements UserAdapt
             Log.d(TAG, "onCreate: trying to get last used user failed" + e.getMessage());
         }
 
-        //trying to get last used User from db
-        try {
-            if (userViewModel.getUserByUsage(true) != null) {
-                currentUser = userViewModel.getUserByUsage(true);
-            }
-        } catch (Exception e) {
-
-            Log.d(TAG, "onCreate: Error on getting user by last used " + Arrays.toString(e.getStackTrace()));
-        }
-
-        //setting up spinners
+        //setting up RV
         try {
             setUpRecyclerView();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        final User newUser = User.builder().build();
+        deleteUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                userViewModel.deleteUser(clickedUserFromRv);
 
+                if(CollectionUtils.isEmpty(userAdapter.getData())){
+                    selectedUserTv.setText("");
+                    selectedUserAddressTv.setText("");
+                }
+            }
+        });
 
         enterUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final AlertDialog alertDialog = new AlertDialog.Builder(UserInputActivity.this).create();
-                AlertUserInputDialogBinding binding = AlertUserInputDialogBinding.inflate(getLayoutInflater());
-                final EditText userNameEdit = binding.userNameEt;
-                final EditText userAddressEdit = binding.userAddressEt;
-                Button locate = binding.locateButton;
-                Button saveUserButton = binding.saveButton;
-                Button cancelButton = binding.cancelButton;
-
-                //Open Maps
-                locate.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                    }
-                });
-
-                // save user to db and fix ui
-                saveUserButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        currentUser = User.builder()
-                                .fullName(userNameEdit.getText().toString())
-                                .address(userAddressEdit.getText().toString())
-                                .build();
-
-                        selectedUserTv.setText(currentUser.getFullName());
-                        selectedUserAddressTv.setText(currentUser.getAddress());
-                        Log.d(TAG, "onCreate: Adding user to db: " + currentUser.getFullName() + " " + currentUser.getAddress() + " " + currentUser.getUid());
-                        userViewModel.insert(currentUser.withLastUsed(true));
-                        alertDialog.cancel();
-
-                    }
-                });
-
-                // just return
-                cancelButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        alertDialog.cancel();
-                    }
-                });
-
-                alertDialog.setView(binding.getRoot());
-                alertDialog.show();
-
-            }
-        });
-
-        deleteUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userViewModel.deleteUser(currentUser);
+                Intent intent = new Intent(getApplicationContext(), AlertDialogActivity.class);
+                startActivity(intent);
             }
         });
 
     }
 
     private void setUpRecyclerView() throws InterruptedException {
-        final User clickedUser = User.builder().build();
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
 
         recyclerView.setLayoutManager(layoutManager);
-        final UserAdapter userAdapter = new UserAdapter(this);
+        userAdapter = new UserAdapter(this);
         recyclerView.setAdapter(userAdapter);
         userAdapter.setUserListener(this);
 
@@ -166,17 +113,11 @@ public class UserInputActivity extends LocalizationActivity implements UserAdapt
         });
     }
 
-    private void initViews(UserInputBinding binding) {
-        enterUser = binding.enterUserButton;
-        deleteUser = binding.deleteUserButton;
-        toolbar = binding.toolBar;
-        recyclerView = binding.userListRv;
-        selectedUserTv = binding.userSelectedName;
-        selectedUserAddressTv = binding.userSelectedAddress;
-    }
-
     @Override
     public void onUserClickListener(List<User> users, int position) {
+
+        clickedUserFromRv = users.get(position);
+        Log.d(TAG, "onUserClickListener: CLICKED " +users.get(position));
 
         User selectedUser = users.get(position);
         selectedUserTv.setText(selectedUser.getFullName());
@@ -186,15 +127,25 @@ public class UserInputActivity extends LocalizationActivity implements UserAdapt
         for (User user : users) {
             if (user == selectedUser) {
                 user.setLastUsed(true);
-            }
-            else {
+            } else {
                 user.setLastUsed(false);
             }
 
         }
-        Log.d(TAG, "onUserClickListener: " +users.toString());
+        Log.d(TAG, "onUserClickListener: " + users.toString());
         userViewModel.updateUser(selectedUser.withLastUsed(true));
         userViewModel.updateUsers(users);
     }
+
+
+    private void initViews(UserInputBinding binding) {
+        enterUser = binding.enterUserButton;
+        deleteUser = binding.deleteUserButton;
+        toolbar = binding.toolBar;
+        recyclerView = binding.userListRv;
+        selectedUserTv = binding.userSelectedName;
+        selectedUserAddressTv = binding.userSelectedAddress;
+    }
+
 
 }

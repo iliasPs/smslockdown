@@ -89,4 +89,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
     }
 
+    public List<User> getData(){
+        return users;
+    }
+
 }
