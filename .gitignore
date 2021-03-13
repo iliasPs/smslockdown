@@ -14,3 +14,5 @@
 .cxx
 changelog
 /app/src/main/res/values/my_places_key.xml
+/app/src/release
+/app/src/debug
