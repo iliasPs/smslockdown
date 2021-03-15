@@ -1,14 +1,14 @@
-package com.ip.smslockdown;
+package com.ip.smslockdown.settings;
 
 import android.content.Context;
 
-final class ParameterLoaderImpl implements ParameterLoader {
+public final class ParameterLoaderImpl implements ParameterLoader {
 
     // attributes
     private final Context context;
 
     // constructors
-    ParameterLoaderImpl(final Context context) {
+    public ParameterLoaderImpl(final Context context) {
 
         if (context == null) {
             throw new NullPointerException("Context cannot be null");

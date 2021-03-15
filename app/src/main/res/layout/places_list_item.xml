@@ -5,25 +5,24 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/place_area"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/icons"
-        android:fontFamily="@font/comfortaa_light"
-        android:maxLines="2"
-        android:textColor="@color/primary_text"
-        android:textSize="14sp" />
+        <TextView
+            android:id="@+id/place_area"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/icons"
+            android:fontFamily="@font/comfortaa_light"
+            android:maxLines="2"
+            android:textColor="@color/primary_text"
+            android:textSize="14sp" />
 
-    <TextView
-        android:id="@+id/place_address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/icons"
-        android:fontFamily="@font/comfortaa_light"
-        android:maxLines="2"
-        android:textColor="@color/primary_text"
-        android:textSize="14sp" />
+        <TextView
+            android:id="@+id/place_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/icons"
+            android:fontFamily="@font/comfortaa_light"
+            android:maxLines="2"
+            android:textColor="@color/primary_text"
+            android:textSize="14sp" />
 
-
-</LinearLayout>
+    </LinearLayout>

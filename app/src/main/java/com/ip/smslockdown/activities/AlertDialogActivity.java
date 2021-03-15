@@ -1,4 +1,4 @@
-package com.ip.smslockdown;
+package com.ip.smslockdown.activities;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import com.google.android.libraries.places.api.model.Place;
+import com.ip.smslockdown.R;
+import com.ip.smslockdown.adapters.PlacesAutoCompleteAdapter;
 import com.ip.smslockdown.databinding.ActivityAlertDialogBinding;
 import com.ip.smslockdown.models.User;
 import com.ip.smslockdown.viewmodel.UserViewModel;
@@ -32,8 +34,28 @@ public class AlertDialogActivity extends AppCompatActivity implements PlacesAuto
     private Button cancelButton;
     private RecyclerView recyclerViewPlaces;
     private PlacesAutoCompleteAdapter adapter;
-    private UserViewModel userViewModel;
+    private final TextWatcher filterTextWatcher = new TextWatcher() {
 
+        public void afterTextChanged(Editable s) {
+            if (!s.toString().equals("")) {
+                adapter.getFilter().filter(s.toString());
+                if (recyclerViewPlaces.getVisibility() == View.GONE) {
+                    recyclerViewPlaces.setVisibility(View.VISIBLE);
+                }
+            } else {
+                if (recyclerViewPlaces.getVisibility() == View.VISIBLE) {
+                    recyclerViewPlaces.setVisibility(View.GONE);
+                }
+            }
+        }
+
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+    };
+    private UserViewModel userViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +71,7 @@ public class AlertDialogActivity extends AppCompatActivity implements PlacesAuto
         adapter = new PlacesAutoCompleteAdapter(getApplicationContext());
         recyclerViewPlaces.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         RecyclerView.ItemAnimator animator = recyclerViewPlaces.getItemAnimator();
-        if(animator instanceof SimpleItemAnimator){
+        if (animator instanceof SimpleItemAnimator) {
             ((SimpleItemAnimator) animator).setSupportsChangeAnimations(false);
         }
         adapter.setClickListener(AlertDialogActivity.this);
@@ -71,6 +93,13 @@ public class AlertDialogActivity extends AppCompatActivity implements PlacesAuto
 
                     Log.d(TAG, "onCreate: Adding user to db: " + currentUser[0].getFullName() + " " + currentUser[0].getAddress() + " " + currentUser[0].getUid());
                     userViewModel.insert(currentUser[0].withLastUsed(true));
+
+                    //making sure that the new user entered is the last used too, so i can update the UI in the userInput activity
+                    User lastUsed = userViewModel.getUserByUsage(true);
+                    if (lastUsed != null) {
+                        userViewModel.updateUser(lastUsed.withLastUsed(false));
+                    }
+
                     finish();
                 }
             }
@@ -86,6 +115,11 @@ public class AlertDialogActivity extends AppCompatActivity implements PlacesAuto
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
     private void initViews(ActivityAlertDialogBinding binding) {
         userNameEdit = binding.userNameEt;
         userAddressEdit = binding.userAddressEt;
@@ -96,32 +130,9 @@ public class AlertDialogActivity extends AppCompatActivity implements PlacesAuto
 
     @Override
     public void click(Place place) {
-        //TODO here i need to set the geofence
         String address = Objects.requireNonNull(place.getAddress()).substring(0, place.getAddress().indexOf(","));
         userAddressEdit.setText(address);
         recyclerViewPlaces.setVisibility(View.GONE);
-
     }
-
-    private TextWatcher filterTextWatcher = new TextWatcher() {
-        public void afterTextChanged(Editable s) {
-            if (!s.toString().equals("")) {
-                adapter.getFilter().filter(s.toString());
-                if (recyclerViewPlaces.getVisibility() == View.GONE) {
-                    recyclerViewPlaces.setVisibility(View.VISIBLE);
-                }
-            } else {
-                if (recyclerViewPlaces.getVisibility() == View.VISIBLE) {
-                    recyclerViewPlaces.setVisibility(View.GONE);
-                }
-            }
-        }
-
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        }
-
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-        }
-    };
 
 }

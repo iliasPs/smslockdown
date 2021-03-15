@@ -100,7 +100,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
-            android:background="@color/accent"
+            android:background="@drawable/rounded_buttons_bck"
             android:text="@string/dialog_cancel"
             android:textAllCaps="false" />
 
@@ -110,7 +110,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_weight="1"
-            android:background="@color/accent"
+            android:background="@drawable/rounded_buttons_bck"
             android:text="@string/dialog_save"
             android:textAllCaps="false" />
     </LinearLayout>

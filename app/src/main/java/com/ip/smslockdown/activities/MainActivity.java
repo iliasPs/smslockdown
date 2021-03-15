@@ -1,4 +1,4 @@
-package com.ip.smslockdown;
+package com.ip.smslockdown.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,8 +24,10 @@ import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.gson.Gson;
+import com.ip.smslockdown.R;
 import com.ip.smslockdown.databinding.ActivityMainBinding;
 import com.ip.smslockdown.helpers.SmsHelper;
+import com.ip.smslockdown.helpers.TimerHelper;
 import com.ip.smslockdown.models.SmsCode;
 import com.ip.smslockdown.models.User;
 import com.ip.smslockdown.viewmodel.UserViewModel;
@@ -71,7 +73,7 @@ public class MainActivity extends LocalizationActivity {
         adView.loadAd(adRequest);
 
         try {
-            if(userViewModel.getUserByUsage(true)!=null){
+            if (userViewModel.getUserByUsage(true) != null) {
                 user = userViewModel.getUserByUsage(true);
                 userName.setText(user.getFullName());
                 userAddress.setText(user.getAddress());
@@ -80,23 +82,14 @@ public class MainActivity extends LocalizationActivity {
             Log.d(TAG, "onCreate: trying to get last used user failed" + e.getMessage());
         }
 
-//        if (User.builder().build().getUserFromCache(getApplicationContext()) != null) {
-//            userName.setText(User.builder().build().getUserFromCache(getApplicationContext()).getFullName());
-//            userAddress.setText(User.builder().build().getUserFromCache(getApplicationContext()).getAddress());
-//        }
-
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                String[] smsArray = getResources().getStringArray(R.array.sms_desc);
-                int id = radioGroup.getCheckedRadioButtonId();
-                descriptionTv.setText(smsArray[((SmsCode) radioGroup.findViewById(id).getTag()).code-1]);
-                smsToSend = SmsHelper.createSms(user, radioGroup.findViewById(id).getTag());
-            }
+        radioGroup.setOnCheckedChangeListener((radioGroup1, i) -> {
+            String[] smsArray = getResources().getStringArray(R.array.sms_desc);
+            int id = radioGroup1.getCheckedRadioButtonId();
+            descriptionTv.setText(smsArray[((SmsCode) radioGroup1.findViewById(id).getTag()).code - 1]);
+            smsToSend = SmsHelper.createSms(user, radioGroup1.findViewById(id).getTag());
         });
 
         Intent intent = getIntent();
-
         if (intent.getExtras() != null) {
             String userString = intent.getStringExtra("user");
             user = gson.fromJson(userString, User.class);
@@ -108,12 +101,10 @@ public class MainActivity extends LocalizationActivity {
             }
         }
 
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SmsHelper.sendSms(smsToSend, getApplicationContext());
-                Log.d(TAG, "sms to send " + smsToSend);
-            }
+        sendButton.setOnClickListener(v -> {
+            SmsHelper.sendSms(smsToSend, getApplicationContext());
+            Log.d(TAG, "sms to send " + smsToSend);
+            TimerHelper.createTimer(getApplicationContext());
         });
     }
 
@@ -154,7 +145,6 @@ public class MainActivity extends LocalizationActivity {
         radioButton6 = binding.sms6;
         sendButton = binding.smsButton;
         adView = binding.adView;
-
 
         SmsCode code = SmsCode.builder().build();
         radioButton1.setTag(code.withCode(1));
