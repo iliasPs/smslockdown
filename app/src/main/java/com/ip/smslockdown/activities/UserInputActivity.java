@@ -34,7 +34,6 @@ public class UserInputActivity extends LocalizationActivity implements UserAdapt
     private RecyclerView recyclerView;
     private TextView selectedUserTv;
     private TextView selectedUserAddressTv;
-    private User clickedUserFromRv;
     private UserAdapter userAdapter;
 
     @Override
@@ -74,8 +73,7 @@ public class UserInputActivity extends LocalizationActivity implements UserAdapt
         deleteUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                userViewModel.deleteUser(clickedUserFromRv);
-
+                userViewModel.deleteUser(userViewModel.getUserByUsage(true));
                 if(userAdapter.getData().size()==1){
                     selectedUserTv.setText("");
                     selectedUserAddressTv.setText("");
@@ -122,9 +120,6 @@ public class UserInputActivity extends LocalizationActivity implements UserAdapt
 
     @Override
     public void onUserClickListener(List<User> users, int position) {
-
-        clickedUserFromRv = users.get(position);
-        Log.d(TAG, "onUserClickListener: CLICKED " +users.get(position));
 
         User selectedUser = users.get(position);
         selectedUserTv.setText(selectedUser.getFullName());
