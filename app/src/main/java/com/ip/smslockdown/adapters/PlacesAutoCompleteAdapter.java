@@ -1,4 +1,4 @@
-package com.ip.smslockdown;
+package com.ip.smslockdown.adapters;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.util.CollectionUtils;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -31,7 +32,10 @@ import com.google.android.libraries.places.api.net.FetchPlaceResponse;
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
+import com.ip.smslockdown.R;
 import com.ip.smslockdown.databinding.PlacesListItemBinding;
+import com.ip.smslockdown.settings.ParameterLoader;
+import com.ip.smslockdown.settings.ParameterLoaderImpl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,14 +47,13 @@ import java.util.concurrent.TimeoutException;
 
 public class PlacesAutoCompleteAdapter extends RecyclerView.Adapter<PlacesAutoCompleteAdapter.PredictionHolder> implements Filterable {
     private static final String TAG = "PlacesAutoAdapter";
-//    private static final String KEY = "AIzaSyBImzpWbTs6sJnJH9RlwYOJ647P95y_YR4";
     private static final String KEY = "my_places_key";
     private String apiKey;
     private final PlacesClient placesClient;
     private ArrayList<AutoCompletePrediction> mResultList = new ArrayList<>();
     private Context mContext;
-    private CharacterStyle STYLE_BOLD;
-    private CharacterStyle STYLE_NORMAL;
+    private final CharacterStyle STYLE_BOLD;
+    private final CharacterStyle STYLE_NORMAL;
     private ClickListener clickListener;
 
 
@@ -195,27 +198,30 @@ public class PlacesAutoCompleteAdapter extends RecyclerView.Adapter<PlacesAutoCo
 
         @Override
         public void onClick(View v) {
-            AutoCompletePrediction item = mResultList.get(getAdapterPosition());
-            if (v.getId() == R.id.place_item_view) {
+            if (!CollectionUtils.isEmpty(mResultList)) {
+                AutoCompletePrediction item = mResultList.get(getAdapterPosition());
 
-                String placeId = String.valueOf(item.placeId);
+                if (v.getId() == R.id.place_item_view) {
 
-                List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS);
-                FetchPlaceRequest request = FetchPlaceRequest.builder(placeId, placeFields).build();
-                placesClient.fetchPlace(request).addOnSuccessListener(new OnSuccessListener<FetchPlaceResponse>() {
-                    @Override
-                    public void onSuccess(FetchPlaceResponse response) {
-                        Place place = response.getPlace();
-                        clickListener.click(place);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        if (exception instanceof ApiException) {
-                            Toast.makeText(mContext, exception.getMessage() + "", Toast.LENGTH_SHORT).show();
+                    String placeId = String.valueOf(item.placeId);
+
+                    List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS);
+                    FetchPlaceRequest request = FetchPlaceRequest.builder(placeId, placeFields).build();
+                    placesClient.fetchPlace(request).addOnSuccessListener(new OnSuccessListener<FetchPlaceResponse>() {
+                        @Override
+                        public void onSuccess(FetchPlaceResponse response) {
+                            Place place = response.getPlace();
+                            clickListener.click(place);
                         }
-                    }
-                });
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            if (exception instanceof ApiException) {
+                                Toast.makeText(mContext, exception.getMessage() + "", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
             }
         }
     }

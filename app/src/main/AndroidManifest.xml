@@ -6,6 +6,7 @@
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the "MyLocation" functionality.
     -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
@@ -19,7 +20,7 @@
         <activity
             android:theme="@style/Theme.AppCompat.Dialog"
             android:excludeFromRecents="true"
-            android:name=".AlertDialogActivity">
+            android:name=".activities.AlertDialogActivity">
 
 
         </activity>
@@ -55,7 +56,7 @@
         </receiver>
 
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:configChanges="locale|orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -65,9 +66,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".UserInputActivity"
+            android:name=".activities.UserInputActivity"
             android:configChanges="locale|orientation"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".activities.MainActivity"
             android:screenOrientation="portrait" />
 
         <meta-data

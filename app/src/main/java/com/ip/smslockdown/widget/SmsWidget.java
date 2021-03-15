@@ -16,6 +16,7 @@ import com.ip.smslockdown.R;
 import com.ip.smslockdown.db.AppDatabase;
 import com.ip.smslockdown.helpers.AppExecutors;
 import com.ip.smslockdown.helpers.SmsHelper;
+import com.ip.smslockdown.helpers.TimerHelper;
 import com.ip.smslockdown.models.SmsCode;
 import com.ip.smslockdown.models.User;
 
@@ -25,7 +26,7 @@ import com.ip.smslockdown.models.User;
 public class SmsWidget extends AppWidgetProvider {
 
     private static final String TAG = "SmsWidget";
-    User user;
+    private User user;
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -66,24 +67,31 @@ public class SmsWidget extends AppWidgetProvider {
             @Override
             public void run() {
                 user = AppDatabase.getDatabase(context).userDao().loadUserByUsage(true);
-                if (Character.isDigit(intent.getAction().charAt(0))) {
-                    String smsToSend = SmsHelper.createSms(user, intent.getAction());
-                    Log.d(TAG, "onReceive: " + smsToSend);
-                    updateWidget(context);
-                    SmsHelper.sendSms(smsToSend, context);
-                }
                 if (user == null) {
                     new Handler(Looper.getMainLooper()).post(new Runnable() {
                         @Override
                         public void run() {
                             Toast.makeText(context, R.string.no_user_available, Toast.LENGTH_SHORT).show();
-
                         }
                     });
                 }
+                // the intent here gets the action of which sms user pressed
+                if (Character.isDigit(intent.getAction().charAt(0))) {
+                    if (user != null) {
+                        String smsToSend = SmsHelper.createSms(user, intent.getAction());
+                        Log.d(TAG, "onReceive: " + smsToSend);
+                        updateWidget(context);
+                        SmsHelper.sendSms(smsToSend, context);
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                TimerHelper.createTimer(context);
+                            }
+                        });
+                    }
+                }
             }
         });
-
     }
 
     private void updateWidget(Context context) {

@@ -1,4 +1,4 @@
-package com.ip.smslockdown;
+package com.ip.smslockdown.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,13 +9,12 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
-import com.google.android.gms.common.util.CollectionUtils;
+import com.ip.smslockdown.adapters.UserAdapter;
 import com.ip.smslockdown.databinding.UserInputBinding;
 import com.ip.smslockdown.models.User;
 import com.ip.smslockdown.viewmodel.UserViewModel;
@@ -77,7 +76,7 @@ public class UserInputActivity extends LocalizationActivity implements UserAdapt
             public void onClick(View v) {
                 userViewModel.deleteUser(clickedUserFromRv);
 
-                if(CollectionUtils.isEmpty(userAdapter.getData())){
+                if(userAdapter.getData().size()==1){
                     selectedUserTv.setText("");
                     selectedUserAddressTv.setText("");
                 }
@@ -94,6 +93,22 @@ public class UserInputActivity extends LocalizationActivity implements UserAdapt
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // i need to make sure i use the last used user, even if it is a new user
+        try {
+            if (userViewModel.getUserByUsage(true) != null) {
+                Log.d(TAG, "onCreate: not null from getUserByUsage ");
+                User user = userViewModel.getUserByUsage(true);
+                selectedUserTv.setText(user.getFullName());
+                selectedUserAddressTv.setText(user.getAddress());
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "onResume: trying to get last used user failed" + e.getMessage());
+        }
+    }
+
     private void setUpRecyclerView() throws InterruptedException {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
@@ -102,15 +117,7 @@ public class UserInputActivity extends LocalizationActivity implements UserAdapt
         userAdapter = new UserAdapter(this);
         recyclerView.setAdapter(userAdapter);
         userAdapter.setUserListener(this);
-
-        Log.d(TAG, "setUpSpinners: " + userViewModel.getUsersList().getValue());
-        userViewModel.getUsersList().observe(this, new Observer<List<User>>() {
-            @Override
-            public void onChanged(List<User> users) {
-                userAdapter.setData(users);
-            }
-
-        });
+        userViewModel.getUsersList().observe(this, users -> userAdapter.setData(users));
     }
 
     @Override

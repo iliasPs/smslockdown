@@ -15,7 +15,7 @@ public class UserRepository {
 
     private static final String TAG = "UserRepository";
     private final AppExecutors appExecutors = AppExecutors.getInstance();
-    private UserDao userDao;
+    private final UserDao userDao;
     private LiveData<List<User>> usersList;
 
     public UserRepository(Application application) {

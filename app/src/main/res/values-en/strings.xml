@@ -40,9 +40,12 @@
 
     //dialog alert
     <string name="dialog_save" translatable="true">Save</string>
-    <string name="dialog_locate">Locate</string>
     <string name="dialog_cancel">Cancel</string>
-    <string name="user_confirm">Confirm</string>
     <string name="input_user" translatable="true">New User</string>
+
+    // notification
+    <string name="timer_ended">Movement remaining time just ended!</string>
+    <string name="timer_title">Movement Timer</string>
+    <string name="timer_ending">15 Minutes remaining of the current movement!</string>
 
 </resources>

@@ -1,8 +1,9 @@
-package com.ip.smslockdown;
+package com.ip.smslockdown.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -39,6 +40,11 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         holder.userNameTv.setText(users.get(position).getFullName());
         holder.userAddressTv.setText(users.get(position).getAddress());
+        if (users.get(position).isLastUsed()) {
+            holder.itemCheckBox.setChecked(true);
+        } else {
+            holder.itemCheckBox.setChecked(false);
+        }
         holder.linearLayout.setSelected(true);
     }
 
@@ -47,15 +53,19 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         return users.size();
     }
 
+    public void setUserListener(UserClickListener listener) {
+
+        this.listener = listener;
+    }
+
+    public List<User> getData() {
+        return users;
+    }
+
     public void setData(List<User> users) {
 
         this.users = users;
         notifyDataSetChanged();
-    }
-
-    public void setUserListener(UserClickListener listener) {
-
-        this.listener = listener;
     }
 
     public interface UserClickListener {
@@ -66,16 +76,16 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     class UserViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView userNameTv;
         private final TextView userAddressTv;
-        private final View view;
         private final LinearLayout linearLayout;
+        private final CheckBox itemCheckBox;
 
         private UserViewHolder(UserItemBinding binding) {
             super(binding.getRoot());
 
-            view = binding.deco;
             userNameTv = binding.userNameRec;
             userAddressTv = binding.userAddressRec;
             linearLayout = binding.linearItem;
+            itemCheckBox = binding.userCheckbox;
 
             userNameTv.setOnClickListener(this);
             userAddressTv.setOnClickListener(this);
@@ -85,12 +95,14 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         @Override
         public void onClick(View v) {
             listener.onUserClickListener(users, getAdapterPosition());
+//            if(itemCheckBox.isChecked()){
+//                itemCheckBox.setChecked(false);
+//            }else{
+//                itemCheckBox.setChecked(true);
+//            }
+
         }
 
-    }
-
-    public List<User> getData(){
-        return users;
     }
 
 }
