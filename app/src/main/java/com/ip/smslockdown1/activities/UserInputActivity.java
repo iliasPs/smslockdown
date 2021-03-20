@@ -81,25 +81,9 @@ public class UserInputActivity extends LocalizationActivity implements UserAdapt
         deleteUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final User[] last = new User[1];
-                AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                         last[0] = userViewModel.getUserByUsage(true);
-                    }
-                });
-
-                if (last[0] != null) {
-                    AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            userViewModel.deleteUser(last[0]);
-                        }
-                    });
-                }
-                    selectedUserTv.setText("");
-                    selectedUserAddressTv.setText("");
-
+                userViewModel.deleteUser(userViewModel.getUserByUsage(true));
+                selectedUserTv.setText("");
+                selectedUserAddressTv.setText("");
             }
         });
 
@@ -114,7 +98,7 @@ public class UserInputActivity extends LocalizationActivity implements UserAdapt
         editUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(userClickedFromList!=null) {
+                if (userClickedFromList != null) {
                     AppExecutors.getInstance().diskIO().execute(new Runnable() {
                         @Override
                         public void run() {

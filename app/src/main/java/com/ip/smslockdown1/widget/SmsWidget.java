@@ -58,14 +58,12 @@ public class SmsWidget extends AppWidgetProvider {
     public void onReceive(final Context context, final Intent intent) {
         super.onReceive(context, intent);
 
-        AppDatabase db = AppDatabase.getDatabase(context);
-        Log.d(TAG, "onReceive: " + db.toString());
-
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
 
             @Override
             public void run() {
                 user = AppDatabase.getDatabase(context).userDao().loadUserByUsage(true);
+                Log.d(TAG, "run: " + user.getFullName());
                 if (user == null) {
                     new Handler(Looper.getMainLooper()).post(new Runnable() {
                         @Override
