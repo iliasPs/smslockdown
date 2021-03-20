@@ -1,4 +1,4 @@
-package com.ip.smslockdown.adapters;
+package com.ip.smslockdown1.adapters;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -32,10 +32,10 @@ import com.google.android.libraries.places.api.net.FetchPlaceResponse;
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
-import com.ip.smslockdown.R;
-import com.ip.smslockdown.databinding.PlacesListItemBinding;
-import com.ip.smslockdown.settings.ParameterLoader;
-import com.ip.smslockdown.settings.ParameterLoaderImpl;
+import com.ip.smslockdown1.R;
+import com.ip.smslockdown1.databinding.PlacesListItemBinding;
+import com.ip.smslockdown1.settings.ParameterLoader;
+import com.ip.smslockdown1.settings.ParameterLoaderImpl;
 
 import java.util.ArrayList;
 import java.util.Arrays;

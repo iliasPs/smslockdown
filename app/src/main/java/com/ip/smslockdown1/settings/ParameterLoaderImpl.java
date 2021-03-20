@@ -1,4 +1,4 @@
-package com.ip.smslockdown.settings;
+package com.ip.smslockdown1.settings;
 
 import android.content.Context;
 

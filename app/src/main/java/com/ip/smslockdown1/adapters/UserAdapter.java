@@ -1,4 +1,4 @@
-package com.ip.smslockdown.adapters;
+package com.ip.smslockdown1.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,8 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ip.smslockdown.databinding.UserItemBinding;
-import com.ip.smslockdown.models.User;
+import com.ip.smslockdown1.databinding.UserItemBinding;
+import com.ip.smslockdown1.models.User;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.ip.smslockdown.helpers;
+package com.ip.smslockdown1.helpers;
 
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 
-import com.ip.smslockdown.models.SmsCode;
-import com.ip.smslockdown.models.User;
+import com.ip.smslockdown1.models.SmsCode;
+import com.ip.smslockdown1.models.User;
 
 public class SmsHelper extends ContextWrapper {
 

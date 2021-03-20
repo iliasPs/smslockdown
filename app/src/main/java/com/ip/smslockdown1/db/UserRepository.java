@@ -1,12 +1,12 @@
-package com.ip.smslockdown.db;
+package com.ip.smslockdown1.db;
 
 import android.app.Application;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
-import com.ip.smslockdown.helpers.AppExecutors;
-import com.ip.smslockdown.models.User;
+import com.ip.smslockdown1.helpers.AppExecutors;
+import com.ip.smslockdown1.models.User;
 
 import java.util.List;
 import java.util.concurrent.Callable;

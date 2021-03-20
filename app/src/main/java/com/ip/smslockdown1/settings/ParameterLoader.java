@@ -1,4 +1,4 @@
-package com.ip.smslockdown.settings;
+package com.ip.smslockdown1.settings;
 
 public interface ParameterLoader {
 

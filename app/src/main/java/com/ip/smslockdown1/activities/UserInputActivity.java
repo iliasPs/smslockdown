@@ -1,4 +1,4 @@
-package com.ip.smslockdown.activities;
+package com.ip.smslockdown1.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,11 +14,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
-import com.ip.smslockdown.adapters.UserAdapter;
-import com.ip.smslockdown.databinding.UserInputBinding;
-import com.ip.smslockdown.helpers.AppExecutors;
-import com.ip.smslockdown.models.User;
-import com.ip.smslockdown.viewmodel.UserViewModel;
+import com.ip.smslockdown1.adapters.UserAdapter;
+import com.ip.smslockdown1.databinding.UserInputBinding;
+import com.ip.smslockdown1.helpers.AppExecutors;
+import com.ip.smslockdown1.models.User;
+import com.ip.smslockdown1.viewmodel.UserViewModel;
 
 import java.util.List;
 import java.util.Objects;

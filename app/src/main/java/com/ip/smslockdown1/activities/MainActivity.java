@@ -1,4 +1,4 @@
-package com.ip.smslockdown.activities;
+package com.ip.smslockdown1.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,13 +19,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
-import com.ip.smslockdown.R;
-import com.ip.smslockdown.databinding.ActivityMainBinding;
-import com.ip.smslockdown.helpers.ScheduleJob;
-import com.ip.smslockdown.helpers.SmsHelper;
-import com.ip.smslockdown.models.SmsCode;
-import com.ip.smslockdown.models.User;
-import com.ip.smslockdown.viewmodel.UserViewModel;
+import com.ip.smslockdown1.R;
+import com.ip.smslockdown1.databinding.ActivityMainBinding;
+import com.ip.smslockdown1.helpers.SmsHelper;
+import com.ip.smslockdown1.models.SmsCode;
+import com.ip.smslockdown1.models.User;
+import com.ip.smslockdown1.viewmodel.UserViewModel;
 
 public class MainActivity extends LocalizationActivity {
 
@@ -83,10 +82,6 @@ public class MainActivity extends LocalizationActivity {
             if (smsToSend != null) {
                 SmsHelper.sendSms(smsToSend, getApplicationContext());
                 Log.d(TAG, "sms to send " + smsToSend);
-//                TimerHelper.createTimer(getApplicationContext());
-                ScheduleJob scheduleJob = new ScheduleJob(getApplicationContext());
-                scheduleJob.scheduleJob();
-
             }
         });
     }

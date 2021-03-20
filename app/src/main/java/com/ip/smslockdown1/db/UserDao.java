@@ -1,4 +1,4 @@
-package com.ip.smslockdown.db;
+package com.ip.smslockdown1.db;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -8,7 +8,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.ip.smslockdown.models.User;
+import com.ip.smslockdown1.models.User;
 
 import java.util.List;
 

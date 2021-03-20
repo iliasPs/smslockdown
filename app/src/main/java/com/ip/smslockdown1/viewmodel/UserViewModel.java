@@ -1,4 +1,4 @@
-package com.ip.smslockdown.viewmodel;
+package com.ip.smslockdown1.viewmodel;
 
 import android.app.Application;
 import android.util.Log;
@@ -7,8 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.ip.smslockdown.db.UserRepository;
-import com.ip.smslockdown.models.User;
+import com.ip.smslockdown1.db.UserRepository;
+import com.ip.smslockdown1.models.User;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;

@@ -1,4 +1,4 @@
-package com.ip.smslockdown.widget;
+package com.ip.smslockdown1.widget;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -12,13 +12,12 @@ import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
-import com.ip.smslockdown.R;
-import com.ip.smslockdown.db.AppDatabase;
-import com.ip.smslockdown.helpers.AppExecutors;
-import com.ip.smslockdown.helpers.SmsHelper;
-import com.ip.smslockdown.helpers.TimerHelper;
-import com.ip.smslockdown.models.SmsCode;
-import com.ip.smslockdown.models.User;
+import com.ip.smslockdown1.R;
+import com.ip.smslockdown1.db.AppDatabase;
+import com.ip.smslockdown1.helpers.AppExecutors;
+import com.ip.smslockdown1.helpers.SmsHelper;
+import com.ip.smslockdown1.models.SmsCode;
+import com.ip.smslockdown1.models.User;
 
 /**
  * Implementation of App Widget functionality.
@@ -82,12 +81,6 @@ public class SmsWidget extends AppWidgetProvider {
                         Log.d(TAG, "onReceive: " + smsToSend);
                         updateWidget(context);
                         SmsHelper.sendSms(smsToSend, context);
-                        new Handler(Looper.getMainLooper()).post(new Runnable() {
-                            @Override
-                            public void run() {
-                                TimerHelper.createTimer(context);
-                            }
-                        });
                     }
                 }
             }

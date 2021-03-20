@@ -1,4 +1,4 @@
-package com.ip.smslockdown.models;
+package com.ip.smslockdown1.models;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

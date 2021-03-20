@@ -1,4 +1,4 @@
-package com.ip.smslockdown.activities;
+package com.ip.smslockdown1.activities;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -16,11 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import com.google.android.libraries.places.api.model.Place;
-import com.ip.smslockdown.R;
-import com.ip.smslockdown.adapters.PlacesAutoCompleteAdapter;
-import com.ip.smslockdown.databinding.ActivityAlertDialogBinding;
-import com.ip.smslockdown.models.User;
-import com.ip.smslockdown.viewmodel.UserViewModel;
+import com.ip.smslockdown1.R;
+import com.ip.smslockdown1.adapters.PlacesAutoCompleteAdapter;
+import com.ip.smslockdown1.databinding.ActivityAlertDialogBinding;
+import com.ip.smslockdown1.models.User;
+import com.ip.smslockdown1.viewmodel.UserViewModel;
 
 import java.util.Objects;
 
@@ -87,7 +87,6 @@ public class AlertDialogActivity extends AppCompatActivity implements PlacesAuto
             userNameEdit.setText(currentUser[0].getFullName());
             userAddressEdit.setText(currentUser[0].getAddress());
         }
-
 
         saveUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
