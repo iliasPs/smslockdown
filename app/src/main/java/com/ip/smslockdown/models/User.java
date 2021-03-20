@@ -28,6 +28,9 @@ public class User implements Serializable {
     @With
     @ColumnInfo(name = "last_used")
     private boolean lastUsed;
+    @With
+    @ColumnInfo(name = "to_edit")
+    private boolean toBeEdited;
 
 
     public User(String fullName, String address, boolean lastUsed) {

@@ -12,22 +12,17 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
-import com.google.gson.Gson;
 import com.ip.smslockdown.R;
 import com.ip.smslockdown.databinding.ActivityMainBinding;
+import com.ip.smslockdown.helpers.ScheduleJob;
 import com.ip.smslockdown.helpers.SmsHelper;
-import com.ip.smslockdown.helpers.TimerHelper;
 import com.ip.smslockdown.models.SmsCode;
 import com.ip.smslockdown.models.User;
 import com.ip.smslockdown.viewmodel.UserViewModel;
@@ -35,9 +30,7 @@ import com.ip.smslockdown.viewmodel.UserViewModel;
 public class MainActivity extends LocalizationActivity {
 
     private final static String TAG = MainActivity.class.getSimpleName();
-    private final Gson gson = new Gson();
     public User user;
-    private AdView adView;
     private ActivityMainBinding binding;
     private TextView descriptionTv;
     private TextView userName;
@@ -64,13 +57,6 @@ public class MainActivity extends LocalizationActivity {
         getSupportActionBar().setTitle("");
         RadioGroup radioGroup = binding.smsRadioGroup;
         userViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(UserViewModel.class);
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
-        AdRequest adRequest = new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
 
         try {
             if (userViewModel.getUserByUsage(true) != null) {
@@ -86,25 +72,22 @@ public class MainActivity extends LocalizationActivity {
             String[] smsArray = getResources().getStringArray(R.array.sms_desc);
             int id = radioGroup1.getCheckedRadioButtonId();
             descriptionTv.setText(smsArray[((SmsCode) radioGroup1.findViewById(id).getTag()).code - 1]);
-            smsToSend = SmsHelper.createSms(user, radioGroup1.findViewById(id).getTag());
+            if (user != null) {
+                smsToSend = SmsHelper.createSms(user, radioGroup1.findViewById(id).getTag());
+            } else {
+                Toast.makeText(this, R.string.enter_a_user, Toast.LENGTH_SHORT).show();
+            }
         });
 
-        Intent intent = getIntent();
-        if (intent.getExtras() != null) {
-            String userString = intent.getStringExtra("user");
-            user = gson.fromJson(userString, User.class);
-            try {
-                userName.setText(user.getFullName());
-                userAddress.setText(user.getAddress());
-            } catch (NullPointerException e) {
-                Log.e(TAG, "Username or Address is null");
-            }
-        }
-
         sendButton.setOnClickListener(v -> {
-            SmsHelper.sendSms(smsToSend, getApplicationContext());
-            Log.d(TAG, "sms to send " + smsToSend);
-            TimerHelper.createTimer(getApplicationContext());
+            if (smsToSend != null) {
+                SmsHelper.sendSms(smsToSend, getApplicationContext());
+                Log.d(TAG, "sms to send " + smsToSend);
+//                TimerHelper.createTimer(getApplicationContext());
+                ScheduleJob scheduleJob = new ScheduleJob(getApplicationContext());
+                scheduleJob.scheduleJob();
+
+            }
         });
     }
 
@@ -113,6 +96,21 @@ public class MainActivity extends LocalizationActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.toolbar_menu, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        try {
+            if (userViewModel.getUserByUsage(true) != null) {
+                user = userViewModel.getUserByUsage(true);
+                userName.setText(user.getFullName());
+                userAddress.setText(user.getAddress());
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "onCreate: trying to get last used user failed" + e.getMessage());
+        }
+
     }
 
     @Override
@@ -144,7 +142,6 @@ public class MainActivity extends LocalizationActivity {
         radioButton5 = binding.sms5;
         radioButton6 = binding.sms6;
         sendButton = binding.smsButton;
-        adView = binding.adView;
 
         SmsCode code = SmsCode.builder().build();
         radioButton1.setTag(code.withCode(1));

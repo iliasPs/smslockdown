@@ -21,7 +21,7 @@ public class TimerHelper {
         new CountDownTimer(TOTAL_MILLIS, INTERVAL_MILLIS) {
             @Override
             public void onTick(long millisUntilFinished) {
-                if (millisUntilFinished < 900000 && millisUntilFinished > 899000) {
+                if (millisUntilFinished < 6000 && millisUntilFinished > 5000) {
                     sendNotification(TIME_ENDING, context);
                 }
             }
@@ -34,6 +34,7 @@ public class TimerHelper {
     }
 
     private static void sendNotification(String remainingTime, Context context) {
+
         NotificationHelper notificationHelper = new NotificationHelper(context);
         if (TIME_ENDING.equals(remainingTime)) {
             notificationHelper.sendHighPriorityNotification(
@@ -48,4 +49,6 @@ public class TimerHelper {
                     , MainActivity.class);
         }
     }
+
+
 }

@@ -11,37 +11,48 @@ import com.ip.smslockdown.db.UserRepository;
 import com.ip.smslockdown.models.User;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class UserViewModel extends AndroidViewModel {
 
     private static final String TAG = "UserViewModel";
-    private final UserRepository userRepository;
+    private final UserRepository userRepository = UserRepository.getInstance();
     private final LiveData<List<User>> usersList;
 
     public UserViewModel(@NonNull Application application) {
         super(application);
 
-        userRepository = new UserRepository(application);
+        userRepository.init(application);
         usersList = userRepository.getAllUsers();
         Log.d(TAG, "UserViewModel: " + usersList.getValue());
     }
 
-    public LiveData<List<User>> getUsersList(){
+    public synchronized LiveData<List<User>> getUsersList() {
         return usersList;
     }
 
-    public void insert(User user){
-        Log.d(TAG, "insert: " +user.getFullName());
+    public synchronized void insert(User user) {
+        Log.d(TAG, "insert: " + user.getFullName());
         userRepository.insertUser(user);
     }
 
-    public void deleteUser(User user){
+    public synchronized void deleteUser(User user) {
 
         userRepository.deleteUser(user);
     }
 
+    public synchronized User getUserByEdit(boolean edit) {
 
-    public User getUserByUsage(boolean isLastUsed)  {
+        try {
+            return userRepository.getUserByEdit(edit);
+        } catch (ExecutionException | InterruptedException e) {
+            Log.d(TAG, "getUserByEdit:  Error while getting editable user " + e.getMessage());
+        }
+        return null;
+    }
+
+
+    public synchronized User getUserByUsage(boolean isLastUsed) {
 
         try {
             return userRepository.getUserByLastUsed(isLastUsed);
@@ -51,12 +62,12 @@ public class UserViewModel extends AndroidViewModel {
         return null;
     }
 
-    public void updateUser(User user){
+    public synchronized void updateUser(User user) {
 
         userRepository.updateUser(user);
     }
 
-    public void updateUsers(List<User> users){
+    public synchronized void updateUsers(List<User> users) {
         userRepository.updateUsers(users);
     }
 

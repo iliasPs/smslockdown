@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase;
 
 import com.ip.smslockdown.models.User;
 
-@Database(entities = {User.class}, version = 1)
+@Database(entities = {User.class}, version = 2)
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase INSTANCE;
 

@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ip.smslockdown">
 
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,9 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity
-            android:theme="@style/Theme.AppCompat.Dialog"
+            android:name=".activities.AlertDialogActivity"
             android:excludeFromRecents="true"
-            android:name=".activities.AlertDialogActivity">
+            android:theme="@style/Theme.AppCompat.Dialog">
 
 
         </activity>
@@ -44,10 +45,6 @@
             android:parentActivityName=".activities.MainActivity"
             android:screenOrientation="portrait" />
 
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-5047897677984062~3556986884" />
-
         <receiver android:name=".widget.SmsWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -57,6 +54,10 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/sms_widget_info" />
         </receiver>
+
+        <service
+            android:name=".service.NotificationService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>
 
 </manifest>

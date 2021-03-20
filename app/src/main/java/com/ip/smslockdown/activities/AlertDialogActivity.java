@@ -80,28 +80,43 @@ public class AlertDialogActivity extends AppCompatActivity implements PlacesAuto
 
         // save user to db and fix ui
         final User[] currentUser = new User[1];
+
+        // checking to see if we are editing
+        if (userViewModel.getUserByEdit(true) != null) {
+            currentUser[0] = userViewModel.getUserByEdit(true);
+            userNameEdit.setText(currentUser[0].getFullName());
+            userAddressEdit.setText(currentUser[0].getAddress());
+        }
+
+
         saveUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (userNameEdit.getText().toString().isEmpty() || userAddressEdit.getText().toString().isEmpty()) {
                     Toast.makeText(AlertDialogActivity.this, R.string.error_saving_user, Toast.LENGTH_SHORT).show();
-                } else {
+                } else if (currentUser[0] == null) {
                     currentUser[0] = User.builder()
                             .fullName(userNameEdit.getText().toString())
                             .address(userAddressEdit.getText().toString())
+                            .lastUsed(true)
                             .build();
 
                     Log.d(TAG, "onCreate: Adding user to db: " + currentUser[0].getFullName() + " " + currentUser[0].getAddress() + " " + currentUser[0].getUid());
-                    userViewModel.insert(currentUser[0].withLastUsed(true));
+                    userViewModel.insert(currentUser[0]);
 
                     //making sure that the new user entered is the last used too, so i can update the UI in the userInput activity
                     User lastUsed = userViewModel.getUserByUsage(true);
                     if (lastUsed != null) {
-                        userViewModel.updateUser(lastUsed.withLastUsed(false));
+                        lastUsed.setLastUsed(false);
+                        userViewModel.updateUser(lastUsed);
                     }
-
-                    finish();
+                } else {
+                    currentUser[0].setFullName(userNameEdit.getText().toString());
+                    currentUser[0].setAddress(userAddressEdit.getText().toString());
+                    userViewModel.updateUser(currentUser[0].withToBeEdited(false));
                 }
+                finish();
             }
         });
 

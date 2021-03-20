@@ -2,6 +2,7 @@ package com.ip.smslockdown.helpers;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -13,6 +14,7 @@ public class AppExecutors {
     // For Singleton instantiation
     private static final Object LOCK = new Object();
     private static AppExecutors sInstance;
+    private static final String TAG = "AppExecutors";
     private final Executor diskIO;
     private final Executor mainThread;
     private final Executor networkIO;
@@ -26,8 +28,8 @@ public class AppExecutors {
     public static AppExecutors getInstance() {
         if (sInstance == null) {
             synchronized (LOCK) {
-                sInstance = new AppExecutors(Executors.newSingleThreadExecutor(),
-                        Executors.newFixedThreadPool(3),
+                sInstance = new AppExecutors(Executors.newCachedThreadPool(),
+                        Executors.newFixedThreadPool(5),
                         new MainThreadExecutor());
             }
         }
@@ -48,6 +50,7 @@ public class AppExecutors {
 
         @Override
         public void execute(@NonNull Runnable command) {
+            Log.d(TAG, "execute: thread  "  + mainThreadHandler.getLooper().getThread().getName() + " " + mainThreadHandler.getLooper().getQueue().toString());
             mainThreadHandler.post(command);
         }
     }

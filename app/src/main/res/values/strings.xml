@@ -29,8 +29,9 @@
     // edittext activity
     <string name="enter_user_button" translatable="true">Εισαγωγή Νέου Χρήστη </string>
     <string name="delete_button_text" translatable="true">Διαγραφή Χρήστη</string>
+    <string name="edit_user" translatable="true">Επεξεργασία επιλεγμένου χρήστη</string>
     <string name="send">Αποστολή SMS</string>
-    <string name="new_user">Επεξεργασία Χρήστη</string>
+    <string name="new_user">Διαχείριση Χρηστών</string>
 
     //toasts
     <string name="toast_user_delete_success" translatable="true">Επιτυχής Διαγραφή Χρήστη</string>
@@ -39,6 +40,7 @@
     <string name="no_user_available" translatable="false">Please open the App and enter a User</string>
     <string name="title_activity_maps" translatable="false">Map</string>
     <string name="pick_user_list" translatable="true">Ή επιλέξτε χρήστη από το Ιστορικό:</string>
+    <string name="enter_a_user" translatable="true">Παρακαλώ εισάγετε Χρήστη</string>
 
     //dialog alert
     <string name="dialog_save" translatable="true">Αποθήκευση</string>

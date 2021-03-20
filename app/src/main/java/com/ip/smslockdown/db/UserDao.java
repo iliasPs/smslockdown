@@ -32,5 +32,8 @@ public interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void updateUsers(List<User> users);
+
+    @Query("SELECT * FROM user WHERE to_edit=:toBeEdited")
+    User loadUserByEdit(boolean toBeEdited);
 }
 

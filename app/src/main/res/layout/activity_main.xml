@@ -255,19 +255,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/desc_linear" />
 
-
-        <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/adView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:foregroundGravity="center"
-            ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-5047897677984062/3872488133"
-            ads:layout_constraintBottom_toBottomOf="parent"
-            ads:layout_constraintLeft_toLeftOf="parent"
-            ads:layout_constraintRight_toRightOf="parent"
-            ads:layout_constraintTop_toBottomOf="@id/sms_button"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

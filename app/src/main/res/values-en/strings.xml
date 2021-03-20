@@ -26,8 +26,8 @@
     // Description TV
     <string name="description">Description: </string>
     <string name="send">Send SMS</string>
-    <string name="new_user">Edit User</string>
-
+    <string name="new_user">Manage Users</string>
+    <string name="edit_user" translatable="true">Edit selected user</string>
     <string name="delete_button_text">Delete User</string>
     <string name="enter_user_button" translatable="true">Enter New User</string>
 
@@ -36,6 +36,7 @@
     <string name="error_saving_user">Please complete all the fields</string>
     <string name="selected_user">Current User:</string>
     <string name="pick_user_list">Or pick a user from History:</string>
+    <string name="enter_a_user" translatable="true">Please insert a User</string>
 
 
     //dialog alert

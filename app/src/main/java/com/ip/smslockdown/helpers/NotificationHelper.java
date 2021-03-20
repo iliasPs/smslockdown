@@ -3,20 +3,16 @@ package com.ip.smslockdown.helpers;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
 import com.ip.smslockdown.R;
 
-import java.util.Random;
+import br.com.goncalves.pugnotification.notification.PugNotification;
 
 public class NotificationHelper extends ContextWrapper {
 
@@ -46,20 +42,30 @@ public class NotificationHelper extends ContextWrapper {
 
     public void sendHighPriorityNotification(String title, String body, Class<?> activityName) {
 
-        Intent intent = new Intent(this, activityName);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 267, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle(title)
-                .setContentText(body)
-                .setSmallIcon(R.drawable.ic_launcher_background)
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setStyle(new NotificationCompat.BigTextStyle().setSummaryText("summary").setBigContentTitle(title).bigText(body))
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true)
+        PugNotification.with(getApplicationContext())
+                .load()
+                .title(title)
+                .message(body)
+                .smallIcon(R.drawable.app_icon)
+                .flags(Notification.DEFAULT_ALL)
+                .simple()
                 .build();
 
-        NotificationManagerCompat.from(this).notify(new Random().nextInt(), notification);
+
+//        Intent intent = new Intent(this, activityName);
+//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 267, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+//                .setContentTitle(title)
+//                .setContentText(body)
+//                .setSmallIcon(R.drawable.ic_launcher_background)
+//                .setPriority(NotificationCompat.PRIORITY_HIGH)
+//                .setStyle(new NotificationCompat.BigTextStyle().setSummaryText("summary").setBigContentTitle(title).bigText(body))
+//                .setContentIntent(pendingIntent)
+//                .setAutoCancel(true)
+//                .build();
+//
+//        NotificationManagerCompat.from(this).notify(new Random().nextInt(), notification);
     }
 
 }

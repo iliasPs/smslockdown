@@ -1,5 +1,6 @@
 package com.ip.smslockdown.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +22,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     private static final String TAG = "UserAdapter";
     private List<User> users = new ArrayList<>();
     private UserClickListener listener;
+    private Context context;
 
-    public UserAdapter(UserClickListener listener) {
+
+    public UserAdapter(Context context, UserClickListener listener) {
+
+        this.context = context;
         this.listener = listener;
     }
 
@@ -38,14 +43,16 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
+        holder.itemCheckBox.setEnabled(false);
         holder.userNameTv.setText(users.get(position).getFullName());
         holder.userAddressTv.setText(users.get(position).getAddress());
+
         if (users.get(position).isLastUsed()) {
             holder.itemCheckBox.setChecked(true);
         } else {
             holder.itemCheckBox.setChecked(false);
         }
-        holder.linearLayout.setSelected(true);
+
     }
 
     @Override
@@ -89,18 +96,25 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
             userNameTv.setOnClickListener(this);
             userAddressTv.setOnClickListener(this);
+            linearLayout.setOnClickListener(this);
+            itemCheckBox.setOnClickListener(this);
 
         }
 
         @Override
         public void onClick(View v) {
             listener.onUserClickListener(users, getAdapterPosition());
-//            if(itemCheckBox.isChecked()){
-//                itemCheckBox.setChecked(false);
-//            }else{
-//                itemCheckBox.setChecked(true);
-//            }
 
+            if (v.getId() == userNameTv.getId()
+                    || v.getId() ==userAddressTv.getId()
+                    || v.getId() ==linearLayout.getId()
+                    || v.getId() ==itemCheckBox.getId()){
+                if(!users.get(getAdapterPosition()).isLastUsed()){
+                    itemCheckBox.setChecked(false);
+                }else{
+                    itemCheckBox.setChecked(true);
+                }
+            }
         }
 
     }
